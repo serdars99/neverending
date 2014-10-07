@@ -22,7 +22,7 @@ namespace neverending
             {
                 Job job = model.Job.Where(p => p.JobName == jobname).FirstOrDefault();
                 job.LastRunTime = DateTime.Now;
-                //model.Job. ApplyCurrentValues(job);
+                //model.Job. ApplyCurrentValues(job); 
                 model.JobWorkLog.Add(new JobWorkLog { JobID = job.JobID, CreateDate = DateTime.Now });
                 model.SaveChanges();
                 if (!job.IsActive.Value)
