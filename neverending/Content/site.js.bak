@@ -1,0 +1,490 @@
+﻿var qsparams = new Array();
+$(document).ready(function () {
+    var rex = document.URL.match(/[^\?&]+=[^\?&]+/g);
+    for (var str in rex) {
+        var param = decodeURIComponent(rex[str]).match(/[^\=]+/g);
+        qsparams[param[0]] = param[1];
+    }
+    moment.lang($('#hdnculture').val());
+    //moment(new Date()).format('dddd')
+    getres();
+});
+var resx;
+function getres() {
+    $.ajax({
+        type: "GET", url: "/gen/" + $('#resfile').val(), dataType: "json",
+        success: function (json) {
+            resx = json;//JSON.parse(json[0]);
+            onloadpartII();
+        }
+    });
+}
+function onloadpartII() {
+    var page = $('#pname').val();
+    if (page == 'main')
+        pagemain();
+    else if (page == "tagged")
+        pagetagged();
+    else if (page == "plupload")
+        initpl();
+
+}
+var lastScrollTop = 0;
+function pagetagged() {
+    var tag = qsparams["tag"];
+    $('.authorDiv .spanbg').each(function () {
+        $(this).html($(this).html().replace(tag, '<span class="color1">' + tag + "</span>"));
+    });
+    $('.mainR').jscroll({
+        loadingHtml: '<img src="/content/images/ajax-loader2.gif" alt="" /> ' + resx.loading + '...',
+        padding: 20
+        //nextSelector: 'a.jscroll-next:last',
+        //, contentSelector: '.mainL'
+    });
+}
+function pagemain() {
+    var storystate = parseInt($('#hdnstorystate').val());
+    var firsttimecookie = $.cookie('frst');
+    if (firsttimecookie == undefined) {
+        $('.pfirsttime').show();
+    }
+    else {
+        if (storystate == 1)
+            $('.pregular').show();
+        else if (storystate == 2)
+            $('.pvoting').show();
+    }
+    $('.mainR').jscroll({
+        loadingHtml: '<img src="/content/images/ajax-loader2.gif" alt="" /> ' + resx.loading + '...',
+        padding: 20
+        //nextSelector: 'a.jscroll-next:last',
+        //, contentSelector: '.mainL'
+    });
+    var untilw = new Date($('#hdnnextexpiry').val());// new Date(2014, 1, 14, 23, 30);
+    if (untilw < (new Date()))
+        CountdownExpired();
+    else
+        $('#countdown' + storystate).countdown({
+            until: untilw, onExpiry: ExpireV2
+            , layout: '{mn} ' + resx.minutes + ', {sn} ' + resx.seconds// , {hn} {hl}, and {dn} {dl}'
+        });
+
+    if (qsparams["eid"] != undefined)
+        $('.spanbg[eid="' + qsparams["eid"] + '"]').addClass('color3');
+
+    checkmembervotes();
+    if (storystate == 1 && $('#hdnmemberid').val() != "0")
+        checklastentry();
+
+    if ($('#hdnlastwinnerentryid').val() != '') {
+        $("#secondpopup").dialog({
+            modal: true,
+            dialogClass: 'popup2', width: 760, height: 630
+        });
+        $('#tagentry').val($('#hdnlastwinnerentrytext').val());
+        $('.ui-dialog-titlebar,.ui-dialog-titlebar-close, .ui-dialog-title').hide();
+    }
+    //setTimeout("testfade()", 3000);
+    //$(window).scroll(function (event) {
+    //    var st = $(this).scrollTop();
+    //    if (st > lastScrollTop) {
+    //    } else {
+    //        if (st == 0)
+    //            onscrollup();
+    //    }
+    //    lastScrollTop = st;
+    //});
+    //"ajax-loader.gif"
+    //$("#success").load("/not-here.php", function (response, status, xhr) {
+    //    if (status == "error") {
+    //        var msg = "Sorry but there was an error: ";
+    //        $("#error").html(msg + xhr.status + " " + xhr.statusText);
+    //    }
+    //});
+}
+function ExpireV2() {
+    document.location = document.location;
+}
+function CountdownExpired() {
+    $('.info4').html('<img src="/content/images/ajax-loader2.gif"/> ' + resx.waitingfornextstep);
+    setTimeout(function () { document.location = document.location; }, 4000);
+    //$.ajax({
+    //    type: "GET", url: "/ajax/getmembervotes", dataType: "json",
+    //    success: function (json) {
+    //        var cookie = "";
+    //        $(json).each(function () {
+    //            cookie += "~" + this.ItemID + '-' + !this.IsDislike;
+    //        });
+    //        $.cookie("votes", cookie);
+    //        modifyvotedentries();
+    //    }
+    //});
+}
+function loadtagsright() {
+    $('.mainR').load("/ajax/tags?storyid=" + $('#hdnstoryid').val());
+}
+function testfade() {//yeni yazilan entryler otomatik sayfada gorunsun
+    $('#entryfades').prepend('<div class="axc" style="display:none">test new entry' + new Date() + '</div>');
+    $('.axc').fadeIn("slow", function () { });
+    setTimeout("testfade()", 3000);
+
+}
+function checkmembervotes(isforce) {
+    if ($('#hdnmemberid').val() != "0" && ($.cookie("votes") == undefined || isforce))
+        $.ajax({
+            type: "GET", url: "/ajax/getmembervotes", dataType: "json",
+            success: function (json) {
+                var cookie = "";
+                $(json).each(function () {
+                    cookie += "~" + this.ItemID + '-' + !this.IsDislike;
+                });
+                $.cookie("votes", cookie);
+                modifyvotedentries();
+            }
+        });
+    else
+        modifyvotedentries();
+}
+function modifyvotedentries() {
+    var cookie = $.cookie("votes");
+    var elms = $('.mainRBox');
+    if (cookie == undefined)
+        return;
+    for (var i = 0; i < elms.length; i++) {
+        var entryid = $(elms[i]).attr('class').match(/entryvotes(\d+)/)[1];
+        if (cookie.indexOf('~' + entryid + '-') != -1) {
+            $(elms[i]).find('.likechoice').hide();
+            var indexer = cookie.indexOf('~' + entryid + '-') + ('~' + entryid + '-').length;
+            if (cookie.substring(indexer, indexer + 4) == "true")
+                $(elms[i]).find('.marinRBoxLike2').show();
+            else
+                $(elms[i]).find('.marinRBoxDis2').show();
+        }
+    }
+}
+function checklastentry() {
+    $.ajax({
+        type: "GET", url: "/ajax/checklastentry", data: { storyid: $('#hdnstoryid').val() }, dataType: "json",
+        success: function (json) {
+            if (json != "0") {
+                $('.alreadyposted').show();
+                $('.notposted').hide();
+                $('.info5').html('"' + json + '"');
+            }
+        }
+    });
+}
+function VoteEntry(islike, entryid) {
+    if ($('#hdnmemberid').val() == "0") {
+        openlogger();
+        return;
+    }
+    var cookie = $.cookie("votes");
+    var storyentry = '~' + entryid + '-';
+    if (cookie != undefined && cookie.indexOf(storyentry) != -1)
+        return showdialog(resx.votedbefore);
+
+    else
+        $.ajax({
+            type: "GET", url: "/ajax/voteentry", data: { storyid: $('#hdnstoryid').val(), entryid: entryid, islike: islike }, dataType: "json",
+            success: function (json) {
+                if (JSON.parse(json) == false)
+                    return showdialog(resx.votedbefore);
+                else
+                    checkmembervotes(true);
+                //if (cookie == undefined)
+                //    cookie = "";
+                //cookie += "~" + entryid + '-' + islike;
+                //$.cookie('votes', cookie, { expires: 2000 });
+                //var elm = $('.entryvotes' + entryid);
+                //elm.find('.likechoice').hide();
+                //if (islike)
+                //    elm.find('.marinRBoxLike2').show();
+                //else
+                //    elm.find('.marinRBoxDis2').show();
+            }
+        });
+}
+function sendfeedback(entryid) {
+    if ($('#hdnmemberid').val() == "0") {
+        openlogger();
+        return;
+    }
+    $.ajax({
+        type: "GET", url: "/ajax/sendfeedback", data: { itemid: entryid, iteminfo: $('#txtComplain').val() }, dataType: "json",
+        success: function (json) {
+            //if (JSON.parse(json) == false)
+            //    return showdialog(resx.votedbefore);
+            showdialog('ok', null);
+        }
+    });
+}
+function ajaxnavigate(loadprev) {
+    var pagecount = $('#pagecount').val();
+    var currentpage = parseInt($('#currentpage').val());
+    var storyid = $('#hdnstoryid').val();
+    var pagetogo = loadprev ? currentpage - 1 : currentpage + 1;
+    $.ajax({
+        type: "GET", url: "/ajax/getpageentries", data: { storyid: storyid, pageno: pagetogo }, dataType: "json",
+        success: function (json) {
+            var span = '<span class="mainentry spanbg" eid="#eid" pid="#pid" mid="#mid" mname="#mname" isanon="#isanon" onclick="showinfo(this);">#txt</span>';
+            var str = "";
+            $(json).each(function () {
+                if (this.isprgstart)
+                    str += "<br/>";
+                str += span.replace(/#eid/, this.eid).replace(/#pid/, this.pid).replace(/#mid/, this.mid).replace(/#isanon/, this.isanon).replace(/#mname/, this.mname).replace(/#txt/, this.text);
+            });
+            if (loadprev)
+                $('#contentbase').prepend(str);
+            else
+                $('#contentbase').append(str);
+        }
+    });
+    currentpage = pagetogo;
+    $('#currentpage').val(currentpage);
+    if (currentpage == pagecount) {
+        $('.golast, .next').hide();
+    }
+    if (currentpage == 1) {
+        $('.gofirst').hide();
+        $('.prev').hide();
+    }
+
+
+}
+var tags = new Array();
+function AddTag(chk) {
+    var tagtype = $('input[name=tagger]:checked').val();
+    $(chk).prop('checked', false);
+    if ($.trim($('#tagentry').textrange().text) == '')// || $('input[name=tagger]:checked').length == 0)
+        return;
+    var tag = { tag: $.trim($('#tagentry').textrange().text), type: tagtype };
+    tag.tag = tag.tag.replace(/\[/, '').replace(/\]/, '');
+    var exist = jQuery.grep(tags, function (n, i) { return n.tag == tag.tag; });
+    if (exist.length == 1)
+        return;
+    tags.push(tag);
+    $('#tagentry').textrange('replace', '[' + tag.tag + '] '); //.trigger('updateInfo').focus();
+    printtags();
+}
+function printtags() {
+    $('#tagged').html('');
+    var tagcont = '<span onclick="ontagclick(this)">#tg, </span>';
+    var html = '';
+    for (var i = 0; i < tags.length; i++)
+        html += tagcont.replace(/#tg/, tags[i].tag);
+    $('#tagged').html(html);
+    //alert($('#tagentry').textrange().text);
+    //textrange().length
+    //$(openerid).textrange('replace', $(this).val()); //.trigger('updateInfo').focus();
+}
+function PostTagsv2(elm) {
+    $(elm).parent().parent().dialog('close');
+    //if (tags.length == 0)
+    //    return;
+    var postdata = { storyid: $('#hdnstoryid').val(), entryid: $('#hdnlastwinnerentryid').val(), tags: tags }
+    $.ajax({
+        url: "/ajax/SaveTags", data: { tagsdata: JSON.stringify(postdata) },
+        success: function (json) {
+            //showdialog(json, function () { document.location = document.location; }); //$('textarea').val('');
+            //close: function(ev, ui) { $(this).remove(); },
+            document.location = document.location;
+
+        }
+    });
+}
+function RewriteText(ts) {
+    var letters = "0123456789qwertyuiopasdfghjklzxcvbnm";
+    var newts = "";
+    ts = ts.toLowerCase().replace("ı", "i").replace("ğ", "g").replace("ş", "s").replace("ç", "c").replace("ü", "u").replace("ö", "o");
+    for (var i = 0; i < ts.length; i++)
+        if (letters.indexOf(ts.substring(i, i + 1)) == -1)
+            newts += "-";
+        else
+            newts += ts.substring(i, i + 1);
+    return newts;
+}
+function ontagclick(elm) {
+    var tag = $(elm).html().replace(', ', '');
+    var newlist = jQuery.grep(tags, function (n, i) { return n.tag != tag });
+    $('#tagentry').val($('#tagentry').val().replace('[' + tag + ']', tag));
+    tags = newlist;
+    printtags();
+}
+function checkone(elm1) {
+    if ($(elm1).prop('checked'))
+        $('input[name=tagger]').each(function () { if (elm1 != this) $(this).prop('checked', false); });
+}
+function showinfo(elm) {
+    var storyid = $('#hdnstoryid').length == 1 ? $('#hdnstoryid').val() : $(elm).attr('sid');
+    var linkbase1 = "http://" + document.location.host;
+    var linkbase = linkbase1 + "/site/story?storyid=" + storyid + "&page=" + $(elm).attr('pid') + "&eid=" + $(elm).attr('eid');
+    var html = 'No: ' + $(elm).attr('eid') + '<br/>';
+    html += resx.entrylink + ': <a href="' + linkbase + '">' + linkbase + '</a><br/>';
+    if ($(elm).attr('isanon') == "false")
+        html += resx.memberlink + ': <a href="' + linkbase1 + '/member?id=' + $(elm).attr('mid') + '">' + linkbase1 + '/' + RewriteText($(elm).attr('mname')) + '?id=' + $(elm).attr('mid') + '</a><br/>';
+    if ($('#hdnmemberrole').val() == '1')//???2
+        html += 'Admin: ' + '&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" onclick="$(\'#texteditor\').toggle();">' + 'Metin Düzenle' + '</a>'
+            + '&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" onclick="admintagger(' + $(elm).attr('eid') + ');">' + 'Tagleri Yönet' + '</a>'
+            + '&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" onclick="if(confirm(\'Emin misiniz?\'))admindeleteentry(' + $(elm).attr('eid') + ');">' + 'Sil' + '</a>'
+            + '&nbsp;&nbsp;&nbsp;&nbsp;Paragraf Başı&nbsp;<input id="chkprgstart" type="checkbox" onclick="switchprg(' + $(elm).attr('eid') + ',' + $(elm).attr('isprg') + ');"/>'
+            + '<br/><div id="texteditor" style="display:none"><textarea id="txtedittext" style="width:500px;height:100px">' + $('.mainentry[eid=' + $(elm).attr('eid') + ']').html()
+            + '</textarea><br/><input type="button" value="'
+        + resx.submit + '" onclick="admineditentry(' + $(elm).attr('eid') + ');"/></div>';
+
+    html += '<input type="button" onclick="$(\'#reporter\').toggle();" value="' + resx.report + '"/><br/>'+"<div id='reporter' style='display:none'>" + resx.stolen
+        + "<br/><textarea id='txtComplain' style='width:500px;height:100px'/><br/><input type='button' value='"
+        + resx.submit + "' onclick='sendfeedback(" + $(elm).attr('eid') + ");'/></div>";
+
+    showdialog(html);
+    $("#genpopup").dialog('option', 'position', [elm.offsetLeft, elm.offsetTop]);
+}
+function DeleteTagRight(entrytagid) {
+    $.ajax({
+        url: "/ajax/admindeleteentrytag", data: { entrytagid: entrytagid },
+        success: function (json) {
+            alert(json);
+            document.location = document.location;
+            //close: function(ev, ui) { $(this).remove(); },
+
+        }
+    });
+}
+function admindeleteentry(entryid) {
+    $.ajax({
+        url: "/ajax/admindeleteentry", data: { entryid: entryid },
+        success: function (json) {
+            alert(json);
+            document.location = document.location;
+            //close: function(ev, ui) { $(this).remove(); },
+
+        }
+    });
+}
+function switchprg(entryid, setprg) {
+    $.ajax({
+        url: "/ajax/switchprg", data: { entryid: entryid, setprg: setprg },
+        success: function (json) {
+            alert(json);
+            //close: function(ev, ui) { $(this).remove(); },
+
+        }
+    });
+}
+function admineditentry(entryid) {
+    $.ajax({
+        url: "/ajax/admineditentrytext", data: { entryid: entryid, entrytext:$('#txtedittext').val() },
+        success: function (json) {
+            alert(json);
+            //close: function(ev, ui) { $(this).remove(); },
+            $('.mainentry[eid=' + entryid + ']').html($('#txtedittext').val());
+            $('#texteditor').toggle();
+        }
+    });
+}
+function admintagger(entryid) {
+    $("#genpopup").dialog('close');
+    $("#secondpopup").dialog({
+        modal: true,
+        dialogClass: 'popup2', width: 760, height: 630
+    });
+    $('#tagentry').val($('.mainentry[eid=' + entryid + ']').html());
+    $('#hdnlastwinnerentryid').val(entryid);
+    $('.ui-dialog-titlebar,.ui-dialog-titlebar-close, .ui-dialog-title').hide();
+    //alert($('.mainentry[eid=' + entryid + ']').html());
+}
+function showdialog(message, closefn) {
+    $("#genpopup").html(message);
+    $("#genpopup").dialog({
+        title: resx.info,
+        resizable: false,
+        modal: true,
+        closeOnEscape: true,
+        close: closefn, width: 550
+    });
+    $('.ui-dialog-titlebar,.ui-dialog-titlebar-close, .ui-dialog-title').show();
+    $('.ui-widget-content').removeClass('ui-widget-content');
+    $('.ui-dialog .ui-dialog-content').css('background', 'white');
+}
+function firsttimeclick() {
+    $.cookie('frst', '1', { expires: 9999 });
+    //$.removeCookie('the_cookie');
+    $('.pfirsttime').hide();
+    $('.pregular').show();
+}
+function SubmitEntry() {
+    if ($.trim($('textarea').val()) == '')
+        return;
+    $.ajax({
+        url: "/ajax/postentry", data: { storyid: $('#hdnstoryid').val(), text: $.trim($('textarea').val()), isanon: $('#chkanon').prop('checked') },
+        success: function (json) {
+            showdialog(json, function () { document.location = document.location; }); //$('textarea').val('');
+            //close: function(ev, ui) { $(this).remove(); },
+
+        }
+    });
+}
+function switchmemberrole(memberid, makeadmin) {
+    $.ajax({
+        url: "/ajax/switchadmin", data: { memberid: memberid, makeadmin: makeadmin },
+        success: function (json) {
+            //showdialog(json, function () { document.location = document.location; }); //$('textarea').val('');
+            alert(json);
+            document.location = document.location;
+            //close: function(ev, ui) { $(this).remove(); },
+
+        }
+    });
+}
+function ConnectFB() {
+    FB.login(function (response) {
+        LoginMember();
+    }, { scope: 'email,publish_stream' }); //,user_likes
+}
+function LoginMember() {
+    if ($('#hdnmemberid').val() == "0")
+        FB.api('/me', function (response) {
+            console.log(response.id);
+            if (response.id != undefined)
+                $.ajax({
+                    url: "/ajax/FBLogin", data: { id: response.id, email: response.email, first_name: response.first_name, last_name: response.last_name }, success: function (json) {
+                        //if ($('#firstpopup') &&  $('#firstpopup').dialog("isOpen")) {
+                        //$('#firstpopup').dialog('close');
+                        document.location = document.location;
+                        //}
+                    }
+                });
+            //username
+        });
+}
+function Logout() {
+    $.ajax({ url: "/ajax/logout", success: function (json) { document.location = document.location; } });
+}
+function checklogin() {
+    if ($('#hdnmemberid').val() == "0")
+        openlogger();
+}
+function openlogger() {
+    $("#firstpopup").dialog({
+        modal: true,
+        dialogClass: 'popup1', width: 650, height: 350,
+        show: { effect: 'fade', duration: 500 },
+        hide: { effect: 'fade', duration: 250 }
+        //buttons: {        //    Ok: function() {        //        $( this ).dialog( "close" );        //    }        //}
+    });
+    $('.ui-dialog-titlebar,.ui-dialog-titlebar-close, .ui-dialog-title').hide();
+    $('.ui-dialog .ui-dialog-content').css('background', 'none');
+}
+function limitchars(elm, limit, display, allowmultiple) {
+    if (allowmultiple == false && elm.value.indexOf('.') != -1) {
+        if (elm.value.indexOf('.') + 1 < elm.value.length) {
+            elm.value = elm.value.substring(0, elm.value.length - 1);
+        }
+    }
+    else
+        if (elm.value.length > limit) {
+            elm.value = elm.value.substring(0, elm.value.length - (elm.value.length - limit));
+        }
+    if (display)
+        $(display).html(limit - elm.value.length);
+}

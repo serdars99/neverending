@@ -1,0 +1,54 @@
+﻿@using neverending.Models;
+@using neverending.Helpers;
+@using neverending;
+@using System.Resources;
+@using System.Globalization;
+@using System.Collections;
+@using System.Xml;
+@{
+    ViewBag.Title = "Resources";
+}
+<div class="main">
+    <div class="mainL" style="padding: 10px; width: 100%">
+        @{ Html.RenderPartial("AdminMenu"); }
+        <h2>Resources Page</h2>
+        <span style="font-weight: bold">Resources</span><br />
+        <select id="rsc" onchange="document.location='/admin/resources?fname='+$(this).val()">
+            <option>Choose File</option>
+            @{
+                string resourcespath = Request.PhysicalApplicationPath + "App_GlobalResources";
+                DirectoryInfo dirInfo = new DirectoryInfo(resourcespath);
+                foreach (FileInfo filInfo in dirInfo.GetFiles())
+                {
+                    string filename = filInfo.Name;
+                    if (filename.IndexOf(".cs") == -1)
+                    {
+                <option>@filename</option>
+                    }
+                }
+            }
+        </select>
+
+        <br />
+        @if (!string.IsNullOrEmpty(Request["fname"]))
+        {
+            string filename = Request.PhysicalApplicationPath + "App_GlobalResources\\" + Request["fname"];
+            XmlDocument xmlDoc = new XmlDocument();
+            int id = 1;
+            xmlDoc.Load(filename);
+            XmlNodeList nlist = xmlDoc.GetElementsByTagName("data");
+            XmlNode childnode = nlist.Item(id);
+            //childnode.Attributes["xml:space"].Value = "default";
+            //xmlDoc.Save(filename);
+            XmlNode lastnode = childnode.SelectSingleNode("value");
+            lastnode.InnerText = lastnode.InnerText + "sss";
+            xmlDoc.Save(filename);
+            //foreach(DictionaryEntry item in slist)
+            //{
+              //  <span>@item.Key</span><span>@item.Value</span>
+            //}
+        }
+    </div>
+
+</div>
+

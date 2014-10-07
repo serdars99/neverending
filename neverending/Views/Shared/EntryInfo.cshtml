@@ -1,0 +1,42 @@
+﻿@using neverending;
+@using neverending.Helpers;
+@using neverending.Models;
+@using Resources;
+@{
+    Layout = null;
+    Member currentmember = Sessioner.GetSessionMember();
+    string linkbase1 = "http://" + Request.Url.Host;
+    bool istr = System.Globalization.CultureInfo.CurrentCulture.ToString() == "tr-TR";
+    string linkbase = linkbase1 + "/" + (istr ? "hikaye/" : "story/") + (Request["sname"] == null ? "-" : BHelper.rwtext(Request["sname"])) + "?id=" + Request["storyid"] + "&page=" + Request["pid"] + "&eid=" + Request["eid"];
+}
+No: @Request["eid"]<br />
+<a href="javascript:void(0)" onclick="$('#etlink').toggle()" >@res.showentrylink</a> <span style="display: none" id="etlink">: <a href="@linkbase">@linkbase</a></span>
+<br />
+@if (Request["isanon"] == "false")
+{
+    string authorlink = linkbase1 + '/' + BHelper.rwtext(Request["mname"]) + "?id=" + Request["mid"];
+    <span><a href="javascript:void(0)" onclick="$('#atlink').toggle()">@res.showauthorlink</a> <span id="atlink" style="display: none">: <a href='@(authorlink)'>@(authorlink)</a></span>
+    </span>
+    <br />
+}
+<br />
+@if (Request["mrole"] == "1")//???2
+{
+    <span>Admin: &nbsp;&nbsp;|&nbsp;&nbsp;
+        <a href="javascript:void(0);" onclick="$('#texteditor').toggle();">Metni Düzenle</a>
+        &nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:void(0);" onclick="admintagger('@Request["eid"] ');">Etiketleri Yönet</a>
+        &nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:void(0);" onclick="if(confirm('Emin misiniz?'))admindeleteentry('@Request["eid"]');">Sil</a>
+        &nbsp;&nbsp;|&nbsp;&nbsp;Paragraf Başı&nbsp;<input id="chkprgstart" type="checkbox" onclick="@("switchprg(" + Request["eid"] + "," + Request["isprg"] + ")")    ;"/>
+    </span>
+    <br />
+    <div id="texteditor" style="display: none">
+        <textarea id="txtedittext" style="width: 500px; height: 100px">@Request["etext"]</textarea><br />
+        <input type="button" value="'@res.submit + '" onclick="@("admineditentry(" + Request["eid"] + ");")"/>
+    </div>
+}
+
+<input type="button" onclick="$('#reporter').toggle();" value="@res.report" /><br />
+<div id='reporter' style='display: none'>@(MvcHtmlString.Create(res.stolen))<br />
+    <textarea id='txtComplain' style='width: 450px; height: 100px' /><br />
+    <input type='button' value='@res.submit' onclick='@("sendfeedback(" + Request["eid"] + ")")    ;' />
+</div>

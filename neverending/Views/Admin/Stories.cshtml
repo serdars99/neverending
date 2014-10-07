@@ -1,0 +1,172 @@
+﻿@using neverending.Models;
+@using neverending.Helpers;
+@using neverending;
+@model List<Story>
+@{
+    ViewBag.Title = "Stories";
+    string linkbase1 = "http://" + Request.Url.Host;
+    bool istr = System.Globalization.CultureInfo.CurrentCulture.ToString() == "tr-TR";
+}
+@if (Model == null)
+{
+    return;
+}
+<div class="main">
+    <div class="mainL" style="padding: 10px;width:100%">
+        @{ Html.RenderPartial("AdminMenu"); }
+        <h2>Story Edit Page</h2>
+        @if (ViewBag.EditStory!=null)
+        {
+            Story estory = ViewBag.EditStory as Story;
+            <span style="font-weight: bold">Edit Story No @estory.StoryID</span><br />
+            <form id="editstoryfrm">
+            <input type="hidden" name="editstoryid" value="@estory.StoryID"/>
+                Story Name:
+            <input type="text" name="storyname" value="@estory.StoryName"/>
+                <br />
+                Story Text:
+            @*<input type="text" name="storytext" value="@estory.StoryText"/>*@
+                <textarea name="storytext" rows="3" style="width:500px;">@estory.StoryText</textarea>
+                <br />
+                Counter1:
+            <input type="text" name="counter1" value="@estory.FirstCounter"/><br />
+                Counter2:
+            <input type="text" name="counter2" value="@estory.SecondCounter"/><br />
+                Char Limit:
+            <input type="text" name="charlimit" value="@estory.CharLimit"/><br />
+                Allow Multiple Sentences:
+            <input type="checkbox" name="allowmultiplesentences" checked="@estory.AllowMultipleSentences"/><br />
+                <input type="submit" value="submit" />
+            </form>
+            <br />
+        }
+        <span style="font-weight: bold">All Stories</span><br />
+        <table border="1">
+            <tr>
+                <th>StoryID
+                </th>
+                <th>Creator
+                </th>
+                <th>StoryName
+                </th>
+                <th>StoryText
+                </th>
+                <th>Counter1
+                </th>
+                <th>Counter2
+                </th>
+                <th>Charlimit
+                </th>
+                <th>AllowMultipleSentences
+                </th>
+                <th>State
+                </th>
+                <th>IsPrivateWriting
+                </th>
+                <th>IsPrivateView
+                </th>
+                
+                <th>MainPageStory
+                </th>
+                <th>Edit
+                </th>
+            </tr>
+            @foreach (Story story in Model)
+            {
+                <tr>
+                    <td>
+                        <a href="@(linkbase1 + "/" + (istr ? "hikaye/" : "story/") + BHelper.rwtext(story.StoryName) + "?id=" + story.StoryID.ToString())" target="_blank">@story.StoryID</a>
+                    </td>
+                    <td>
+                        @story.Member.MemberName
+                    </td>
+                    <td>
+                        @story.StoryName
+                    </td>
+                    <td>
+                        @story.StoryText
+                    </td>
+                    <td>
+                        @story.FirstCounter
+                    </td>
+                    <td>
+                        @story.SecondCounter
+                    </td>
+                    <td>
+                        @story.CharLimit
+                    </td>
+                    <td>
+                        @story.AllowMultipleSentences
+                    </td>
+                    <td>
+                        @story.StoryState.StateName
+                    </td>
+                    <td>
+                        @story.IsPrivateWriting
+                    </td>
+                    <td>
+                        @story.IsPrivateView
+                    </td>
+                    <td>
+                        @(story.StatusID==2)
+                    </td>
+                    <td>
+                        <form style="display: inline;display:@(story.StatusID==2?"none":"block")">
+                            <input type="hidden" name="storyid" value="@story.StoryID"/>
+                            <input type="submit" name="activate" value="show on mainpage" />
+                        </form>
+                        <form style="display: inline;display:@(story.StatusID==2?"block":"none")">
+                            <input type="hidden" name="storyid" value="@story.StoryID"/>
+                            <input type="submit" name="deactivate" value="remove from mainpage" />
+                        </form>
+                        <form style="display: inline;display:@(story.StatusID==3?"block":"none")">
+                            <input type="hidden" name="storyid" value="@story.StoryID"/>
+                            <input type="submit" name="makeactive" value="make active" />
+                        </form>
+                        <form style="display: inline;display:@(story.StatusID==3?"none":"block")">
+                            <input type="hidden" name="storyid" value="@story.StoryID"/>
+                            <input type="submit" name="makepassive" value="make passive" />
+                        </form>
+                        <form style="display: inline;">
+                            <input type="hidden" name="storyid" value="@story.StoryID"/>
+                            <input type="submit" name="delete" value="delete" />
+                        </form>
+                        <input type="button" value="Edit" onclick="document.location=document.location+'?storyid=@(story.StoryID)    ';" />
+                        @*<input type="button" value="Edit" onclick="$(this).next().css('display', 'inline')" />*@
+                        @*                        <form style="display: none">
+                            <input type="hidden" name="storyid" value="@story.StoryID" />
+                            Story Name
+                            <input type="text" name="storyname" />
+                        </form>*@
+                    </td>
+                </tr>   
+            }
+        </table>
+        <br />
+
+        <span style="font-weight: bold">
+            <a href="javascript:void(0);" onclick="$('#addnewfrm').toggle();">Add New Story</a>
+        </span>
+        <br />
+        <form id="addnewfrm" style="display: none">
+            New Story Name:
+            <input type="text" name="newstoryname" /><br />
+            New Story Text:
+            @*<input type="text" name="newstorytext" />*@
+            <textarea name="newstorytext" rows="3" style="width:500px;"></textarea>
+            <br />
+            Counter1:
+            <input type="text" name="newcounter1" /><br />
+            Counter2:
+            <input type="text" name="newcounter2" /><br />
+            Char Limit:
+            <input type="text" name="newcharlimit" /><br />
+            Allow Multiple Sentences:
+            <input type="checkbox" name="newallowmultiplesentences" /><br />
+            <input type="submit" value="submit" />
+        </form>
+
+    </div>
+
+</div>
+

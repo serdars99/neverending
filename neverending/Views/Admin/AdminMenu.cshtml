@@ -1,0 +1,20 @@
+﻿@using neverending.Models;
+@using neverending.Helpers;
+@using neverending;
+@{
+    Layout = null;
+    string url = Request.Url.ToString().ToLower();
+    string norm = "normal";
+    string bold = "bold";
+}
+<ul style="width: 100%; background-color: gray;">
+    <li style="float: left; padding: 10px;">
+        <a href="/admin/stories" style="font-weight: @(url.IndexOf("/stories") > -1 ? bold:norm)">Story Edit Page</a>
+    </li>
+    @if (BHelper.isauthok("1"))
+    {
+        <li style="float: left; padding: 10px;">
+            <a href="/admin/feedbacks" style="font-weight: @(url.IndexOf("/feedbacks") > -1 ? bold:norm)">FeedBacks</a>
+        </li>
+    }
+</ul>

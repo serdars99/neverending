@@ -1,0 +1,66 @@
+﻿@using neverending.Models;
+@using neverending.Helpers;
+@using neverending;
+@model List<FeedBack>
+@{
+    ViewBag.Title = "FeedBacks";
+}
+@if (Model == null)
+{
+    return;
+}
+<div class="main">
+    <div class="mainL" style="padding: 10px;width:100%">
+        @{ Html.RenderPartial("AdminMenu"); }
+        <h2>FeedBacks Page</h2>
+        <span style="font-weight: bold">FeedBacks</span><br />
+        <table border="1">
+            <tr>
+                <th>FeedBackID
+                </th>
+                <th>Sender
+                </th>
+                <th>Story
+                </th>
+                <th>Entry
+                </th>
+                <th>Detail
+                </th>
+                <th>Edit
+                </th>
+            </tr>
+            @foreach (FeedBack feed in Model)
+            {
+                <tr>
+                    <td>
+                        @feed.FeedBackID
+                    </td>
+                    <td>
+                        @feed.Member.NickName
+                    </td>
+                    <td>
+                        @feed.Entry.Story.StoryName
+                    </td>
+                    <td>
+                        @feed.Entry.EntryText
+                    </td>
+                    <td>
+                        @feed.TextInfo
+                    </td>
+                    <td>
+                        <input type="button" value="Mark as Read" onclick="document.location=document.location+'?setread=1&feedid=@(feed.FeedBackID)';" />
+                        @*<input type="button" value="Edit" onclick="$(this).next().css('display', 'inline')" />*@
+                        @*                        <form style="display: none">
+                            <input type="hidden" name="storyid" value="@story.StoryID" />
+                            Story Name
+                            <input type="text" name="storyname" />
+                        </form>*@
+                    </td>
+                </tr>   
+            }
+        </table>
+        <br />
+    </div>
+
+</div>
+

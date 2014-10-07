@@ -1,0 +1,37 @@
+﻿@using neverending;
+@using neverending.Helpers;
+@using Resources;
+
+@if (ViewBag.entriesonvote != null)
+{
+    Member currentmember = Sessioner.GetSessionMember();
+    int lastid = 0;
+	int storyid=0;
+    foreach (Entry entry in ViewBag.entriesonvote)
+    {
+        lastid = entry.EntryID; 
+	storyid=entry.StoryID;
+    <div class="mainRBox entryvotes@(entry.EntryID)">
+        @*<div class="mainRBoxTop">Sentence #@entry.EntryID</div>*@
+        <div class="mainRBoxTop"><span class="span1">@res.entry #@entry.EntryID</span><span class="span2" l="@entry.LikeCount" d="@entry.DislikeCount">@entry.LikeCount @res.likes, @entry.DislikeCount @res.dislikes</span></div>
+        <span>@entry.EntryText
+            <a href="/@(!entry.IsAnonymous ? BHelper.rwtext(entry.Member.MemberName) + "?id=" + entry.Member.MemberID.ToString() : "")" 
+                class="author">-@(entry.IsAnonymous ? res.anonym : entry.Member.MemberName)</a>
+            @if (currentmember != null && currentmember.AdminRoleID.HasValue)
+            {
+                @:&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" onclick="admindeleteentry(@entry.EntryID)">Sil</a>
+                    }
+        </span>
+        <div class="clr"></div>
+        <a href="javascript:void(0);" onclick="VoteEntry(true,@entry.EntryID);" class="marinRBoxLike likechoice">@res.like</a>
+        <a href="javascript:void(0);" onclick="VoteEntry(false,@entry.EntryID);" class="marinRBoxDis likechoice">@res.dislike</a>
+        <a href="#" class="marinRBoxLike2" style="display: none">@res.liked</a>
+        <a href="#" class="marinRBoxDis2" style="display: none">@res.disliked</a>
+        <div class="clr"></div>
+    </div>
+    }
+    if (lastid > 0)
+    {
+    <a href="/ajax/ScrollEntries?storyid=@storyid&lastid=@lastid" style="display: none">next page</a>
+    }
+}

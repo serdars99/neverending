@@ -1,0 +1,68 @@
+﻿@using neverending;
+@using neverending.Helpers;
+@using Resources;
+@{
+    ViewBag.Title = "Profile";
+    Member currentmember = Sessioner.GetSessionMember();
+    Member entrymember = ViewBag.member as Member;
+}
+<div class="main">
+    <div class="mainL">
+        <div class="content">
+
+            @if (currentmember != null && (currentmember.AdminRoleID == 1))
+                {
+                <div style="padding-bottom:30px">
+                    <a href="javascript:void(0);" onclick="storystarter();">create new story</a><br />
+                    @if(ViewBag.memberstories!=null)
+                    {
+                        @:Edit Stories<br />
+                        List<Story> memberstories = ViewBag.memberstories as List<Story>;
+                        foreach(Story memberstory in memberstories)
+                        {
+                            <a href="javascript:void(0);" onclick="storystarter(@memberstory.StoryID);">@memberstory.StoryName - editstory</a><br />
+                        }
+                    }
+                </div>
+                }
+
+            <div class="contentTop">@entrymember.MemberName @res.entriesby
+                @if (currentmember != null && currentmember.AdminRoleID == 1)
+                {
+                    if (!entrymember.AdminRoleID.HasValue)
+                    {
+                    <a href="javascript:void(0);" onclick="switchmemberrole(@entrymember.MemberID,true)">Yetki ver</a>
+                    }
+                    else if (entrymember.AdminRoleID == 2)
+                    {
+                    <a href="javascript:void(0);" onclick="switchmemberrole(@entrymember.MemberID,false)">Yetkiyi Kaldır</a>
+                    }
+                }
+                @if (currentmember != null && currentmember.AdminRoleID == 1 && entrymember.MemberID!=currentmember.MemberID)
+                {
+                    <a href="javascript:void(0);" id="fwbtn" onclick="switchfollow(@entrymember.MemberID)">@res.follow</a>
+                }
+                <a class="close2" href="javascript:void(0);" onclick="$(this).parent().hide();"></a>
+            </div>
+            @foreach (Entry entry in ViewBag.entries)
+            {
+                <div class="authorDiv">
+                    @if (entry.IsChosen == true)
+                    {
+                        <p>@res.sentencewaschosen</p>
+                        <div class="clr"></div>
+                    }
+                    <span class="mainentry spanbg" eid="@(entry.EntryID)" pid="@entry.PageNo" mid="@(entry.IsAnonymous ? 0 : entry.MemberID)" mname="@(entry.IsAnonymous ? "" : entrymember.MemberName)" 
+                        isanon="@entry.IsAnonymous.ToString().ToLower()" isprg="@((!entry.IsParagraphStart).ToString().ToLower())" sname="@BHelper.rwtext(entry.Story.StoryName)"
+                    onclick="showinfo(this);">@entry.EntryText</span>
+                    <div class="clr"></div>
+                    <span class="contentLike">@(MvcHtmlString.Create(res.likesanddislikes.Replace("#l", entry.LikeCount.ToString()).Replace("#dl", entry.DislikeCount.ToString()))) </span>
+                    <em>@res.Posted @entry.CreateDate.ToString("dd.MM.yyy")</em><div class="clr"></div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="clr"></div>
+    <input type="hidden" id="pmemberid" value="@entrymember.MemberID" />
+    <input type="hidden" id="pname" value="profile" />
+</div>

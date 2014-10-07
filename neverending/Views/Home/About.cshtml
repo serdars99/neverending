@@ -1,0 +1,14 @@
+﻿@using neverending.Helpers;
+@using Resources;
+@{
+    ViewBag.Title = res.MainTitle;
+}
+<div class="main">
+    <div class="mainL">
+        <div class="content">
+             @MvcHtmlString.Create(res.aboutmessage)
+        </div>
+    </div>
+    <div class="clr"></div>
+    <input type="hidden" id="pname" value="about" />
+</div>

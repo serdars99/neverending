@@ -1,0 +1,211 @@
+﻿@using neverending;
+@using neverending.Helpers;
+@using neverending.Models;
+@using Resources;
+@{
+    Layout = null;
+    Member currentmember = Sessioner.GetSessionMember();
+    Story story = ViewBag.story as Story;
+}
+<div>
+    <style>
+        .dline
+        {
+            padding-top: 5px;
+        }
+    </style>
+    <form id="usrstoryfrm" action="/ajax/saveuserstory" method="get">
+        <input type="hidden" name="hdnuserstoryid" value="@(story == null ? "0" : story.StoryID.ToString())" />
+        <table>
+            <tr>
+                <th>Basic Info</th>
+            </tr>
+            <tr>
+                <td>New Story Name:
+           
+                </td>
+                <td>
+                    <input type="text" name="newstoryname" style="width:425px" maxlength="50" value="@(story == null ? "" : story.StoryName)"/>
+                </td>
+            </tr>
+            <tr>
+                <td>New Story Text:
+           
+                </td>
+                <td>
+                    <textarea name="newstorytext" rows="3" style="width: 425px;">@(story == null ? "" : story.StoryText)</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>Counter1:
+           
+                </td>
+                <td>
+                    <input type="text" name="newcounter1" onkeyup="limitnumeric(this);" maxlength="2" value="@(story == null ? "" : story.FirstCounter.ToString())"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Counter2:
+           
+                </td>
+                <td>
+                    <input type="text" name="newcounter2" onkeyup="limitnumeric(this);" maxlength="2" value="@(story == null ? "" : story.SecondCounter.ToString())"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Char Limit:
+           
+                </td>
+                <td>
+                    <input type="text" name="newcharlimit" onkeyup="limitnumeric(this);" maxlength="3" value="@(story == null ? "" : story.CharLimit.ToString())"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Allow Multiple Sentences:
+           
+                </td>
+                <td>
+                    <input type="checkbox" name="newallowmultiplesentences" @((story == null || !story.AllowMultipleSentences) ? "" : "checked")/>
+                </td>
+            </tr>
+            @if (story != null)
+            {
+                string linkbase1 = "http://" + Request.Url.Host;
+                bool istr = System.Globalization.CultureInfo.CurrentCulture.ToString() == "tr-TR";
+                string link = linkbase1 + "/" + (istr ? "hikaye/" : "story/") + BHelper.rwtext(story.StoryName) + "?id=" + story.StoryID.ToString();
+                <tr>
+                    <td>Link:
+                    </td>
+                    <td>
+                        <a href="@link" target="_blank">@link</a>
+                    </td>
+                </tr>
+            }
+        </table>
+        <div>
+            <input type="button" value="Save" onclick="saveuserstory();" />
+        </div>
+        @if (story != null)
+        {
+            <table>
+                <tr>
+                    <th>Advanced Info</th>
+                </tr>
+                <tr>
+                    <td rowspan="3">Story Admins
+                    </td>
+                    <td></td>
+                    <td>Your Followers
+                    </td>
+                    <td>Chosen Members
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <select style="" disabled="disabled">
+                            <option>Choose From List</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select id="slcadmins1" multiple style="width: 150px">
+                            @if (ViewBag.followers != null)
+                            {
+                                List<Follow> followers = ViewBag.followers as List<Follow>;
+                                foreach (Follow follower in followers)
+                                {
+                                <option value="@follower.Member.MemberID">@follower.Member.MemberName</option>
+                                }
+                            }
+                        </select>
+                    </td>
+                    <td>
+                        <select id="slcadmins2" multiple style="width: 150px">
+                            @if (ViewBag.storymembers != null)
+                            {
+                                List<StoryMember> followers = ViewBag.storymembers as List<StoryMember>;
+                                foreach (StoryMember follower in followers)
+                                {
+                                    if (follower.TypeID == 3)
+                                    {
+                                <option value="@follower.Member.MemberID">@follower.Member.MemberName</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <button onclick="AddRemoveStoryMember(@story.StoryID,3,false);" type="button">ekle</button>
+                    </td>
+                    <td>
+                        <button onclick="AddRemoveStoryMember(@story.StoryID,3,true);" type="button">Çıkar</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td rowspan="3">Story Viewers
+                    </td>
+                    <td></td>
+                    <td>Your Followers
+                    </td>
+                    <td>Chosen Members
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input id="hdnprivateview" type="hidden" value="@story.IsPrivateView.ToString()"/>
+                        <input id="hdnprivatewrite" type="hidden" value="@story.IsPrivateWriting.ToString()"/>
+                        <select id="slcviewers0" style="" onchange="ChangeStoryView(@story.StoryID,$(this).val());">
+                            <option value="1">Public read and write</option>
+                            <option value="2">Public read, private write</option>
+                            <option value="3">Private read and write</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select id="slcviewers1" multiple style="width: 150px" @(story.IsPrivateWriting ? "disabled" : "")>
+                            @if (ViewBag.followers != null)
+                            {
+                                List<Follow> followers = ViewBag.followers as List<Follow>;
+                                foreach (Follow follower in followers)
+                                {
+                                <option value="@follower.Member.MemberID">@follower.Member.MemberName</option>
+                                }
+                            }
+                        </select>
+                    </td>
+                    <td>
+                        <select id="slcviewers2" multiple style="width: 150px" @(story.IsPrivateWriting ? "disabled" : "")>
+                            @if (ViewBag.storymembers != null)
+                            {
+                                List<StoryMember> followers = ViewBag.storymembers as List<StoryMember>;
+                                foreach (StoryMember follower in followers)
+                                {
+                                    if (follower.TypeID == 4)
+                                    {
+                                <option value="@follower.Member.MemberID">@follower.Member.MemberName</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <button onclick="AddRemoveStoryMember(@story.StoryID,4,false);" type="button">ekle</button>
+                    </td>
+                    <td>
+                        <button onclick="AddRemoveStoryMember(@story.StoryID,4,true);" type="button">Çıkar</button>
+                    </td>
+                </tr>
+            </table>
+        }
+    </form>
+</div>

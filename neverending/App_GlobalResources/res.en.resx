@@ -1,0 +1,343 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="about" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="aboutmessage" xml:space="preserve">
+    <value>Welcome to the Neverending Text.&lt;br/&gt;&lt;br/&gt;
+Neverending Text is a web site that allows users to write a collective, infinite text, sentence by sentence. 
+Each user, logging via Facebook, writes a sentence and submits it. Then, the submitted sentence is listed on the right hand panel. &lt;br/&gt;&lt;br/&gt;
+After the voting period, the sentence that has the most “likes” gets picked and is added to the text. &lt;br/&gt;&lt;br/&gt;
+If two or more sentences has the same number of likes, the sentence with the least number of dislikes gets picked. &lt;br/&gt;&lt;br/&gt;
+Then, the next round of voting starts. In the Neverending Text, there is no specific limitation of content, and this is on purpose. The responsibility of the text belongs to you, to me, to everyone. Write well, and the text will be good. Like the well-written sentence and dislike the bad one, and the story will be good. &lt;br/&gt;&lt;br/&gt;
+And we’ll have something good to read. &lt;br/&gt;&lt;br/&gt;
+Ad infinitum.</value>
+  </data>
+  <data name="abouttitle" xml:space="preserve">
+    <value>About Neverending Text</value>
+  </data>
+  <data name="allrights" xml:space="preserve">
+    <value>All Rights Reserved</value>
+  </data>
+  <data name="anonym" xml:space="preserve">
+    <value>anonym</value>
+  </data>
+  <data name="cantpostnow" xml:space="preserve">
+    <value>You can't post now.</value>
+  </data>
+  <data name="character" xml:space="preserve">
+    <value>Character</value>
+  </data>
+  <data name="Characters" xml:space="preserve">
+    <value>Characters</value>
+  </data>
+  <data name="choosetagwords" xml:space="preserve">
+    <value>Choose the word(s) you want to tag, and its relevant tag. </value>
+  </data>
+  <data name="chosenthanks" xml:space="preserve">
+    <value>Neverending Text will continue with your sentence.&lt;br /&gt;</value>
+  </data>
+  <data name="congrats" xml:space="preserve">
+    <value>Congratulations!</value>
+  </data>
+  <data name="countdown1" xml:space="preserve">
+    <value>left for next voting phase!</value>
+  </data>
+  <data name="dislike" xml:space="preserve">
+    <value>Dislike</value>
+  </data>
+  <data name="disliked" xml:space="preserve">
+    <value>Disliked</value>
+  </data>
+  <data name="dislikes" xml:space="preserve">
+    <value>negative</value>
+  </data>
+  <data name="entriesby" xml:space="preserve">
+    <value>Entries</value>
+  </data>
+  <data name="entry" xml:space="preserve">
+    <value>entry</value>
+  </data>
+  <data name="entrylink" xml:space="preserve">
+    <value>Entry Link</value>
+  </data>
+  <data name="info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="like" xml:space="preserve">
+    <value>Like</value>
+  </data>
+  <data name="liked" xml:space="preserve">
+    <value>Liked</value>
+  </data>
+  <data name="likes" xml:space="preserve">
+    <value>positive</value>
+  </data>
+  <data name="likesanddislikes" xml:space="preserve">
+    <value>Got #l likes and #dl dislikes</value>
+  </data>
+  <data name="loading" xml:space="preserve">
+    <value>loading</value>
+  </data>
+  <data name="loadprev" xml:space="preserve">
+    <value>Load earlier parts</value>
+  </data>
+  <data name="location" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="logout" xml:space="preserve">
+    <value>Log out</value>
+  </data>
+  <data name="MainTitle" xml:space="preserve">
+    <value>Neverending Text Beta</value>
+  </data>
+  <data name="memberlink" xml:space="preserve">
+    <value>Author Link</value>
+  </data>
+  <data name="minutes" xml:space="preserve">
+    <value>minute(s)</value>
+  </data>
+  <data name="Places" xml:space="preserve">
+    <value>Places</value>
+  </data>
+  <data name="postanonymous" xml:space="preserve">
+    <value>Post anonymously</value>
+  </data>
+  <data name="Posted" xml:space="preserve">
+    <value>Posted</value>
+  </data>
+  <data name="postedsuccesfully" xml:space="preserve">
+    <value>Your sentence is submitted</value>
+  </data>
+  <data name="readnextentries" xml:space="preserve">
+    <value>You can vote the sentences written by others until the next writing phase. </value>
+  </data>
+  <data name="savetags" xml:space="preserve">
+    <value>Finished</value>
+  </data>
+  <data name="seconds" xml:space="preserve">
+    <value>second(s)</value>
+  </data>
+  <data name="sentencewaschosen" xml:space="preserve">
+    <value>This sentence was chosen!</value>
+  </data>
+  <data name="stolen" xml:space="preserve">
+    <value>Tell us where it is from please</value>
+  </data>
+  <data name="submit" xml:space="preserve">
+    <value>SUBMIT</value>
+  </data>
+  <data name="tags" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="time" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="viewentries" xml:space="preserve">
+    <value>View Sentences</value>
+  </data>
+  <data name="viewtags" xml:space="preserve">
+    <value>View Tags</value>
+  </data>
+  <data name="votedbefore" xml:space="preserve">
+    <value>You have already voted for this entry.</value>
+  </data>
+  <data name="votesentences" xml:space="preserve">
+    <value>Vote Sentences</value>
+  </data>
+  <data name="votinglabel" xml:space="preserve">
+    <value>Below are the sentences written by others. Vote so that the story will continue as you like it. </value>
+  </data>
+  <data name="votingphase1" xml:space="preserve">
+    <value>VOTING PHASE</value>
+  </data>
+  <data name="votingphase2" xml:space="preserve">
+    <value>Can't write now, but vote for the sentences written by others. </value>
+  </data>
+  <data name="waitingfornextstep" xml:space="preserve">
+    <value>waiting for next step...</value>
+  </data>
+  <data name="warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="welcome1" xml:space="preserve">
+    <value>Welcome to Neverending Text!</value>
+  </data>
+  <data name="welcome2" xml:space="preserve">
+    <value>WRITE THE NEXT SENTENCE</value>
+  </data>
+  <data name="welcome3" xml:space="preserve">
+    <value>Neverending Text will continue with your sentences. </value>
+  </data>
+  <data name="welcome4" xml:space="preserve">
+    <value>Greetings,</value>
+  </data>
+  <data name="welcome5" xml:space="preserve">
+    <value>WELCOME TO NEVERENDING TEXT</value>
+  </data>
+  <data name="welcome6" xml:space="preserve">
+    <value>Login with your Facebook account&lt;br /&gt;to become a part of this story that stretches to infinity.</value>
+  </data>
+  <data name="welcome7" xml:space="preserve">
+    <value>Login with Facebook</value>
+  </data>
+  <data name="youpostedbefore" xml:space="preserve">
+    <value>You have posted for this part before</value>
+  </data>
+  <data name="yourentrychosen" xml:space="preserve">
+    <value>YOUR SENTENCE IS CHOSEN.</value>
+  </data>
+  <data name="yourentrysubmitted" xml:space="preserve">
+    <value>YOUR SENTENCE IS SUBMITTED.</value>
+  </data>
+  <data name="settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="report" xml:space="preserve">
+    <value>report</value>
+  </data>
+  <data name="complaintsent" xml:space="preserve">
+    <value>Thank You.</value>
+  </data>
+  <data name="showauthorlink" xml:space="preserve">
+    <value>Show author link</value>
+  </data>
+  <data name="showentrylink" xml:space="preserve">
+    <value>Show entry link</value>
+  </data>
+  <data name="contact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="follow" xml:space="preserve">
+    <value>follow</value>
+  </data>
+  <data name="unfollow" xml:space="preserve">
+    <value>unfollow</value>
+  </data>
+  <data name="twitterconnect" xml:space="preserve">
+    <value>Login with Twitter</value>
+  </data>
+  <data name="countdown2" xml:space="preserve">
+    <value>left for next writing phase!</value>
+  </data>
+</root>

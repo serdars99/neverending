@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>jquery.mousewheel</id>
+    <version>3.0.4</version>
+    <title>jQuery Mouse Wheel Extension</title>
+    <authors>Brandon Aaron</authors>
+    <owners>Brandon Aaron</owners>
+    <licenseUrl>http://github.com/brandonaaron/jquery-mousewheel/blob/master/LICENSE.txt</licenseUrl>
+    <projectUrl>http://plugins.jquery.com/project/mousewheel</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Adds mouse wheel support for your application! Just call mousewheel to add the event and call unmousewheel to remove the event.</description>
+    <summary>Adds mouse wheel support for your application! Just call mousewheel to add the event and call unmousewheel to remove the event.</summary>
+    <tags>jquery plugin</tags>
+    <dependencies>
+      <dependency id="jquery" version="1.4.4" />
+    </dependencies>
+  </metadata>
+</package>

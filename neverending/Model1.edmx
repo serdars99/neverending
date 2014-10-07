@@ -1,0 +1,1207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="neverendingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="CommentID" />
+          </Key>
+          <Property Name="CommentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeID" Type="int" Nullable="false" />
+          <Property Name="UniqueID" Type="int" Nullable="false" />
+          <Property Name="CommentText" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="StatusID" Type="int" Nullable="false" />
+          <Property Name="ParentCommentID" Type="int" />
+          <Property Name="ClientIP" Type="varchar" MaxLength="15" />
+          <Property Name="AdminID" Type="int" />
+          <Property Name="LikeCount" Type="int" Nullable="false" />
+          <Property Name="DislikeCount" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CommentType">
+          <Key>
+            <PropertyRef Name="CommentTypeID" />
+          </Key>
+          <Property Name="CommentTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeName" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ELMAH_Error">
+          <Key>
+            <PropertyRef Name="ErrorId" />
+          </Key>
+          <Property Name="ErrorId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Application" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="Host" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Source" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="Message" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="User" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StatusCode" Type="int" Nullable="false" />
+          <Property Name="TimeUtc" Type="datetime" Nullable="false" />
+          <Property Name="Sequence" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AllXml" Type="ntext" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Entry">
+          <Key>
+            <PropertyRef Name="EntryID" />
+          </Key>
+          <Property Name="EntryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StoryID" Type="int" Nullable="false" />
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="EntryText" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="IsAnonymous" Type="bit" Nullable="false" />
+          <Property Name="IsChosen" Type="bit" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="StatusID" Type="int" Nullable="false" />
+          <Property Name="LikeCount" Type="int" Nullable="false" />
+          <Property Name="DislikeCount" Type="int" Nullable="false" />
+          <Property Name="AdminID" Type="int" />
+          <Property Name="AdminDate" Type="datetime" />
+          <Property Name="PageNo" Type="int" />
+          <Property Name="IsParagraphStart" Type="bit" Nullable="false" />
+          <Property Name="TotalVotes" Type="int" Nullable="false" />
+          <Property Name="VotesAvg" Type="int" Nullable="false" />
+          <Property Name="IsTagged" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EntryTag">
+          <Key>
+            <PropertyRef Name="EntryTagID" />
+          </Key>
+          <Property Name="EntryTagID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EntryID" Type="int" Nullable="false" />
+          <Property Name="TagID" Type="int" Nullable="false" />
+          <Property Name="TagTypeID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FeedBack">
+          <Key>
+            <PropertyRef Name="FeedBackID" />
+          </Key>
+          <Property Name="FeedBackID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="TypeID" Type="int" Nullable="false" />
+          <Property Name="StatusID" Type="int" Nullable="false" />
+          <Property Name="ItemID" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="TextInfo" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Follow">
+          <Key>
+            <PropertyRef Name="FollowID" />
+          </Key>
+          <Property Name="FollowID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FollowerID" Type="int" Nullable="false" />
+          <Property Name="FollowedID" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ItemLike">
+          <Key>
+            <PropertyRef Name="LikeID" />
+          </Key>
+          <Property Name="LikeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemID" Type="int" Nullable="false" />
+          <Property Name="TypeID" Type="int" Nullable="false" />
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="IsDislike" Type="bit" Nullable="false" />
+          <Property Name="Weight" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ItemLikeType">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Name="TypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Definition" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Job">
+          <Key>
+            <PropertyRef Name="JobID" />
+          </Key>
+          <Property Name="JobID" Type="int" Nullable="false" />
+          <Property Name="JobName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="LastRunTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="JobWorkLog">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JobID" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="MemberID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FaceID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MemberName" Type="varchar" MaxLength="101" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="NickName" Type="varchar" MaxLength="50" />
+          <Property Name="StatusID" Type="int" Nullable="false" />
+          <Property Name="Birthdate" Type="datetime" />
+          <Property Name="FirstVisitDate" Type="datetime" />
+          <Property Name="FirstVisitIP" Type="varchar" MaxLength="15" />
+          <Property Name="LastVisitDate" Type="datetime" />
+          <Property Name="LastVisitIP" Type="varchar" MaxLength="15" />
+          <Property Name="AvatarCode" Type="varchar" MaxLength="16" />
+          <Property Name="VoteMultiplier" Type="int" Nullable="false" />
+          <Property Name="AdminRoleID" Type="int" />
+          <Property Name="TwitterTokens" Type="varchar" MaxLength="200" />
+          <Property Name="LinkedinJob" Type="varchar" MaxLength="60" />
+          <Property Name="FollowerCount" Type="int" Nullable="false" />
+          <Property Name="TwitterID" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Parameter">
+          <Key>
+            <PropertyRef Name="ParameterID" />
+          </Key>
+          <Property Name="ParameterID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Value" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Story">
+          <Key>
+            <PropertyRef Name="StoryID" />
+          </Key>
+          <Property Name="StoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AdminID" Type="int" Nullable="false" />
+          <Property Name="StoryName" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="StoryText" Type="varchar(max)" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="PageCount" Type="int" Nullable="false" />
+          <Property Name="LastEntryChosenDate" Type="datetime" Nullable="false" />
+          <Property Name="StatusID" Type="int" Nullable="false" />
+          <Property Name="FirstCounter" Type="int" Nullable="false" />
+          <Property Name="SecondCounter" Type="int" Nullable="false" />
+          <Property Name="StateID" Type="int" Nullable="false" />
+          <Property Name="NextTickDate" Type="datetime" Nullable="false" />
+          <Property Name="IsPrivateView" Type="bit" Nullable="false" />
+          <Property Name="IsPrivateWriting" Type="bit" Nullable="false" />
+          <Property Name="CharLimit" Type="int" Nullable="false" />
+          <Property Name="AllowMultipleSentences" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StoryMember">
+          <Key>
+            <PropertyRef Name="StoryMemberID" />
+          </Key>
+          <Property Name="StoryMemberID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StoryID" Type="int" Nullable="false" />
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="TypeID" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StoryMemberType">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Name="TypeID" Type="int" Nullable="false" />
+          <Property Name="TypeName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StoryState">
+          <Key>
+            <PropertyRef Name="StoryStateID" />
+          </Key>
+          <Property Name="StoryStateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StateName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="TagID" />
+          </Key>
+          <Property Name="TagID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TagText" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TagType">
+          <Key>
+            <PropertyRef Name="TagTypeID" />
+          </Key>
+          <Property Name="TagTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Comment_Member">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Entry_Member">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Entry" Type="Self.Entry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="Entry">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Entry_Story">
+          <End Role="Story" Type="Self.Story" Multiplicity="1" />
+          <End Role="Entry" Type="Self.Entry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Story">
+              <PropertyRef Name="StoryID" />
+            </Principal>
+            <Dependent Role="Entry">
+              <PropertyRef Name="StoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EntryTag_Entry">
+          <End Role="Entry" Type="Self.Entry" Multiplicity="1" />
+          <End Role="EntryTag" Type="Self.EntryTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entry">
+              <PropertyRef Name="EntryID" />
+            </Principal>
+            <Dependent Role="EntryTag">
+              <PropertyRef Name="EntryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EntryTag_Tag">
+          <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
+          <End Role="EntryTag" Type="Self.EntryTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tag">
+              <PropertyRef Name="TagID" />
+            </Principal>
+            <Dependent Role="EntryTag">
+              <PropertyRef Name="TagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Follow_Member">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Follow" Type="Self.Follow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="Follow">
+              <PropertyRef Name="FollowerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Story_Member">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Story" Type="Self.Story" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="Story">
+              <PropertyRef Name="AdminID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Story_StoryState">
+          <End Role="StoryState" Type="Self.StoryState" Multiplicity="1" />
+          <End Role="Story" Type="Self.Story" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StoryState">
+              <PropertyRef Name="StoryStateID" />
+            </Principal>
+            <Dependent Role="Story">
+              <PropertyRef Name="StateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StoryMember_Member">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="StoryMember" Type="Self.StoryMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="StoryMember">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StoryMember_Story">
+          <End Role="Story" Type="Self.Story" Multiplicity="1" />
+          <End Role="StoryMember" Type="Self.StoryMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Story">
+              <PropertyRef Name="StoryID" />
+            </Principal>
+            <Dependent Role="StoryMember">
+              <PropertyRef Name="StoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="CalculateVotes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ELMAH_GetErrorsXml" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Application" Type="nvarchar" Mode="In" />
+          <Parameter Name="PageIndex" Type="int" Mode="In" />
+          <Parameter Name="PageSize" Type="int" Mode="In" />
+          <Parameter Name="TotalCount" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="ELMAH_GetErrorXml" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Application" Type="nvarchar" Mode="In" />
+          <Parameter Name="ErrorId" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="ELMAH_LogError" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ErrorId" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="Application" Type="nvarchar" Mode="In" />
+          <Parameter Name="Host" Type="nvarchar" Mode="In" />
+          <Parameter Name="Type" Type="nvarchar" Mode="In" />
+          <Parameter Name="Source" Type="nvarchar" Mode="In" />
+          <Parameter Name="Message" Type="nvarchar" Mode="In" />
+          <Parameter Name="User" Type="nvarchar" Mode="In" />
+          <Parameter Name="AllXml" Type="ntext" Mode="In" />
+          <Parameter Name="StatusCode" Type="int" Mode="In" />
+          <Parameter Name="TimeUtc" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="FixStoryPages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StoryID" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="neverendingModelStoreContainer">
+          <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CommentType" EntityType="Self.CommentType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ELMAH_Error" EntityType="Self.ELMAH_Error" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Entry" EntityType="Self.Entry" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EntryTag" EntityType="Self.EntryTag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FeedBack" EntityType="Self.FeedBack" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Follow" EntityType="Self.Follow" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemLike" EntityType="Self.ItemLike" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemLikeType" EntityType="Self.ItemLikeType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Job" EntityType="Self.Job" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JobWorkLog" EntityType="Self.JobWorkLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Member" EntityType="Self.Member" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Parameter" EntityType="Self.Parameter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Story" EntityType="Self.Story" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StoryMember" EntityType="Self.StoryMember" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StoryMemberType" EntityType="Self.StoryMemberType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StoryState" EntityType="Self.StoryState" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tag" EntityType="Self.Tag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TagType" EntityType="Self.TagType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Comment_Member" Association="Self.FK_Comment_Member">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Entry_Member" Association="Self.FK_Entry_Member">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Entry" EntitySet="Entry" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Entry_Story" Association="Self.FK_Entry_Story">
+            <End Role="Story" EntitySet="Story" />
+            <End Role="Entry" EntitySet="Entry" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EntryTag_Entry" Association="Self.FK_EntryTag_Entry">
+            <End Role="Entry" EntitySet="Entry" />
+            <End Role="EntryTag" EntitySet="EntryTag" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EntryTag_Tag" Association="Self.FK_EntryTag_Tag">
+            <End Role="Tag" EntitySet="Tag" />
+            <End Role="EntryTag" EntitySet="EntryTag" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Follow_Member" Association="Self.FK_Follow_Member">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Follow" EntitySet="Follow" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Story_Member" Association="Self.FK_Story_Member">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Story" EntitySet="Story" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Story_StoryState" Association="Self.FK_Story_StoryState">
+            <End Role="StoryState" EntitySet="StoryState" />
+            <End Role="Story" EntitySet="Story" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StoryMember_Member" Association="Self.FK_StoryMember_Member">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="StoryMember" EntitySet="StoryMember" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StoryMember_Story" Association="Self.FK_StoryMember_Story">
+            <End Role="Story" EntitySet="Story" />
+            <End Role="StoryMember" EntitySet="StoryMember" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="neverendingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="CommentID" />
+          </Key>
+          <Property Name="CommentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeID" Type="Int32" Nullable="false" />
+          <Property Name="UniqueID" Type="Int32" Nullable="false" />
+          <Property Name="CommentText" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="StatusID" Type="Int32" Nullable="false" />
+          <Property Name="ParentCommentID" Type="Int32" />
+          <Property Name="ClientIP" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="AdminID" Type="Int32" />
+          <Property Name="LikeCount" Type="Int32" Nullable="false" />
+          <Property Name="DislikeCount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Member" Relationship="Self.FK_Comment_Member" FromRole="Comment" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="CommentType">
+          <Key>
+            <PropertyRef Name="CommentTypeID" />
+          </Key>
+          <Property Name="CommentTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ELMAH_Error">
+          <Key>
+            <PropertyRef Name="ErrorId" />
+          </Key>
+          <Property Name="ErrorId" Type="Guid" Nullable="false" />
+          <Property Name="Application" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Host" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Source" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Message" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="User" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StatusCode" Type="Int32" Nullable="false" />
+          <Property Name="TimeUtc" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Sequence" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AllXml" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EntryTag">
+          <Key>
+            <PropertyRef Name="EntryTagID" />
+          </Key>
+          <Property Name="EntryTagID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntryID" Type="Int32" Nullable="false" />
+          <Property Name="TagID" Type="Int32" Nullable="false" />
+          <Property Name="TagTypeID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Tag" Relationship="Self.FK_EntryTag_Tag" FromRole="EntryTag" ToRole="Tag" />
+          <NavigationProperty Name="Entry" Relationship="neverendingModel.FK_EntryTag_Entry" FromRole="EntryTag" ToRole="Entry" />
+        </EntityType>
+        <EntityType Name="FeedBack">
+          <Key>
+            <PropertyRef Name="FeedBackID" />
+          </Key>
+          <Property Name="FeedBackID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="TypeID" Type="Int32" Nullable="false" />
+          <Property Name="StatusID" Type="Int32" Nullable="false" />
+          <Property Name="ItemID" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TextInfo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Member" Relationship="Self.FK_FeedBack_Member" FromRole="FeedBack" ToRole="Member" />
+          <NavigationProperty Name="Entry" Relationship="neverendingModel.FK_FeedBack_Entry" FromRole="FeedBack" ToRole="Entry" />
+        </EntityType>
+        <EntityType Name="ItemLike">
+          <Key>
+            <PropertyRef Name="LikeID" />
+          </Key>
+          <Property Name="LikeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemID" Type="Int32" Nullable="false" />
+          <Property Name="TypeID" Type="Int32" Nullable="false" />
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsDislike" Type="Boolean" Nullable="false" />
+          <Property Name="Weight" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="ItemLikeType">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Name="TypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Definition" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Job">
+          <Key>
+            <PropertyRef Name="JobID" />
+          </Key>
+          <Property Name="JobID" Type="Int32" Nullable="false" />
+          <Property Name="JobName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="LastRunTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="JobWorkLog">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobID" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="MemberID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FaceID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MemberName" Type="String" MaxLength="101" FixedLength="false" Unicode="false" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NickName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StatusID" Type="Int32" Nullable="false" />
+          <Property Name="Birthdate" Type="DateTime" Precision="3" />
+          <Property Name="FirstVisitDate" Type="DateTime" Precision="3" />
+          <Property Name="FirstVisitIP" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="LastVisitDate" Type="DateTime" Precision="3" />
+          <Property Name="LastVisitIP" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="AvatarCode" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="VoteMultiplier" Type="Int32" Nullable="false" />
+          <Property Name="AdminRoleID" Type="Int32" />
+          <NavigationProperty Name="Comment" Relationship="Self.FK_Comment_Member" FromRole="Member" ToRole="Comment" />
+          <NavigationProperty Name="FeedBack" Relationship="Self.FK_FeedBack_Member" FromRole="Member" ToRole="FeedBack" />
+          <Property Name="TwitterTokens" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="LinkedinJob" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Entry" Relationship="neverendingModel.FK_Entry_Member" FromRole="Member" ToRole="Entry" />
+          <Property Name="FollowerCount" Type="Int32" Nullable="false" />
+          <Property Name="TwitterID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Follow" Relationship="neverendingModel.FK_Follow_Member" FromRole="Member" ToRole="Follow" />
+          <NavigationProperty Name="StoryMember" Relationship="neverendingModel.FK_StoryMember_Member" FromRole="Member" ToRole="StoryMember" />
+          <NavigationProperty Name="Story" Relationship="neverendingModel.FK_Story_Member" FromRole="Member" ToRole="Story" />
+        </EntityType>
+        <EntityType Name="Parameter">
+          <Key>
+            <PropertyRef Name="ParameterID" />
+          </Key>
+          <Property Name="ParameterID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Value" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Story">
+          <Key>
+            <PropertyRef Name="StoryID" />
+          </Key>
+          <Property Name="StoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AdminID" Type="Int32" Nullable="false" />
+          <Property Name="StoryName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StoryText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PageCount" Type="Int32" Nullable="false" />
+          <Property Name="LastEntryChosenDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="StatusID" Type="Int32" Nullable="false" />
+          <Property Name="FirstCounter" Type="Int32" Nullable="false" />
+          <Property Name="SecondCounter" Type="Int32" Nullable="false" />
+          <Property Name="StateID" Type="Int32" Nullable="false" />
+          <Property Name="NextTickDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsPrivateView" Type="Boolean" Nullable="false" />
+          <Property Name="IsPrivateWriting" Type="Boolean" Nullable="false" />
+          <Property Name="CharLimit" Type="Int32" Nullable="false" />
+          <Property Name="AllowMultipleSentences" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Entry" Relationship="neverendingModel.FK_Entry_Story" FromRole="Story" ToRole="Entry" />
+          <NavigationProperty Name="StoryMember" Relationship="neverendingModel.FK_StoryMember_Story" FromRole="Story" ToRole="StoryMember" />
+          <NavigationProperty Name="Member" Relationship="neverendingModel.FK_Story_Member" FromRole="Story" ToRole="Member" />
+          <NavigationProperty Name="StoryState" Relationship="neverendingModel.FK_Story_StoryState" FromRole="Story" ToRole="StoryState" />
+        </EntityType>
+        <EntityType Name="StoryMember">
+          <Key>
+            <PropertyRef Name="StoryMemberID" />
+          </Key>
+          <Property Name="StoryMemberID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StoryID" Type="Int32" Nullable="false" />
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="TypeID" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Story" Relationship="neverendingModel.FK_StoryMember_Story" FromRole="StoryMember" ToRole="Story" />
+          <NavigationProperty Name="Member" Relationship="neverendingModel.FK_StoryMember_Member" FromRole="StoryMember" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="StoryMemberType">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Name="TypeID" Type="Int32" Nullable="false" />
+          <Property Name="TypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StoryState">
+          <Key>
+            <PropertyRef Name="StoryStateID" />
+          </Key>
+          <Property Name="StoryStateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StateName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Story" Relationship="neverendingModel.FK_Story_StoryState" FromRole="StoryState" ToRole="Story" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="TagID" />
+          </Key>
+          <Property Name="TagID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TagText" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="EntryTag" Relationship="Self.FK_EntryTag_Tag" FromRole="Tag" ToRole="EntryTag" />
+        </EntityType>
+        <EntityType Name="TagType">
+          <Key>
+            <PropertyRef Name="TagTypeID" />
+          </Key>
+          <Property Name="TagTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Comment_Member">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EntryTag_Tag">
+          <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
+          <End Role="EntryTag" Type="Self.EntryTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tag">
+              <PropertyRef Name="TagID" />
+            </Principal>
+            <Dependent Role="EntryTag">
+              <PropertyRef Name="TagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FeedBack_Member">
+          <End Role="Member" Type="Self.Member" Multiplicity="1" />
+          <End Role="FeedBack" Type="Self.FeedBack" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="FeedBack">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Model1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Comment" EntityType="Self.Comment" />
+          <EntitySet Name="CommentType" EntityType="Self.CommentType" />
+          <EntitySet Name="ELMAH_Error" EntityType="Self.ELMAH_Error" />
+          <EntitySet Name="EntryTag" EntityType="Self.EntryTag" />
+          <EntitySet Name="FeedBack" EntityType="Self.FeedBack" />
+          <EntitySet Name="ItemLike" EntityType="Self.ItemLike" />
+          <EntitySet Name="ItemLikeType" EntityType="Self.ItemLikeType" />
+          <EntitySet Name="Job" EntityType="Self.Job" />
+          <EntitySet Name="JobWorkLog" EntityType="Self.JobWorkLog" />
+          <EntitySet Name="Member" EntityType="Self.Member" />
+          <EntitySet Name="Parameter" EntityType="Self.Parameter" />
+          <EntitySet Name="Story" EntityType="Self.Story" />
+          <EntitySet Name="StoryMember" EntityType="Self.StoryMember" />
+          <EntitySet Name="StoryMemberType" EntityType="Self.StoryMemberType" />
+          <EntitySet Name="StoryState" EntityType="Self.StoryState" />
+          <EntitySet Name="Tag" EntityType="Self.Tag" />
+          <EntitySet Name="TagType" EntityType="Self.TagType" />
+          <AssociationSet Name="FK_Comment_Member" Association="Self.FK_Comment_Member">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EntryTag_Tag" Association="Self.FK_EntryTag_Tag">
+            <End Role="Tag" EntitySet="Tag" />
+            <End Role="EntryTag" EntitySet="EntryTag" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FeedBack_Member" Association="Self.FK_FeedBack_Member">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="FeedBack" EntitySet="FeedBack" />
+          </AssociationSet>
+          <FunctionImport Name="CalculateVotes" />
+          <FunctionImport Name="ELMAH_GetErrorsXml" ReturnType="Collection(String)">
+            <Parameter Name="Application" Mode="In" Type="String" />
+            <Parameter Name="PageIndex" Mode="In" Type="Int32" />
+            <Parameter Name="PageSize" Mode="In" Type="Int32" />
+            <Parameter Name="TotalCount" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ELMAH_GetErrorXml" ReturnType="Collection(String)">
+            <Parameter Name="Application" Mode="In" Type="String" />
+            <Parameter Name="ErrorId" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="ELMAH_LogError">
+            <Parameter Name="ErrorId" Mode="In" Type="Guid" />
+            <Parameter Name="Application" Mode="In" Type="String" />
+            <Parameter Name="Host" Mode="In" Type="String" />
+            <Parameter Name="Type" Mode="In" Type="String" />
+            <Parameter Name="Source" Mode="In" Type="String" />
+            <Parameter Name="Message" Mode="In" Type="String" />
+            <Parameter Name="User" Mode="In" Type="String" />
+            <Parameter Name="AllXml" Mode="In" Type="String" />
+            <Parameter Name="StatusCode" Mode="In" Type="Int32" />
+            <Parameter Name="TimeUtc" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="FixStoryPages">
+          <Parameter Name="StoryID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="Entry" EntityType="neverendingModel.Entry" />
+          <AssociationSet Name="FK_Entry_Member" Association="neverendingModel.FK_Entry_Member">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Entry" EntitySet="Entry" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Entry_Story" Association="neverendingModel.FK_Entry_Story">
+            <End Role="Story" EntitySet="Story" />
+            <End Role="Entry" EntitySet="Entry" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EntryTag_Entry" Association="neverendingModel.FK_EntryTag_Entry">
+            <End Role="Entry" EntitySet="Entry" />
+            <End Role="EntryTag" EntitySet="EntryTag" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FeedBack_Entry" Association="neverendingModel.FK_FeedBack_Entry">
+            <End Role="Entry" EntitySet="Entry" />
+            <End Role="FeedBack" EntitySet="FeedBack" />
+          </AssociationSet>
+          <EntitySet Name="Follow" EntityType="neverendingModel.Follow" />
+          <AssociationSet Name="FK_StoryMember_Story" Association="neverendingModel.FK_StoryMember_Story">
+            <End Role="Story" EntitySet="Story" />
+            <End Role="StoryMember" EntitySet="StoryMember" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Follow_Member" Association="neverendingModel.FK_Follow_Member">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Follow" EntitySet="Follow" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StoryMember_Member" Association="neverendingModel.FK_StoryMember_Member">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="StoryMember" EntitySet="StoryMember" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Story_Member" Association="neverendingModel.FK_Story_Member">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Story" EntitySet="Story" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Story_StoryState" Association="neverendingModel.FK_Story_StoryState">
+            <End Role="StoryState" EntitySet="StoryState" />
+            <End Role="Story" EntitySet="Story" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Entry">
+          <Key>
+            <PropertyRef Name="EntryID" />
+          </Key>
+          <Property Name="EntryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StoryID" Type="Int32" Nullable="false" />
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="EntryText" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IsAnonymous" Type="Boolean" Nullable="false" />
+          <Property Name="IsChosen" Type="Boolean" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="StatusID" Type="Int32" Nullable="false" />
+          <Property Name="LikeCount" Type="Int32" Nullable="false" />
+          <Property Name="DislikeCount" Type="Int32" Nullable="false" />
+          <Property Name="AdminID" Type="Int32" />
+          <Property Name="AdminDate" Type="DateTime" Precision="3" />
+          <Property Name="PageNo" Type="Int32" />
+          <Property Name="IsParagraphStart" Type="Boolean" Nullable="false" />
+          <Property Name="TotalVotes" Type="Int32" Nullable="false" />
+          <Property Name="VotesAvg" Type="Int32" Nullable="false" />
+          <Property Name="IsTagged" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Member" Relationship="neverendingModel.FK_Entry_Member" FromRole="Entry" ToRole="Member" />
+          <NavigationProperty Name="Story" Relationship="neverendingModel.FK_Entry_Story" FromRole="Entry" ToRole="Story" />
+          <NavigationProperty Name="EntryTag" Relationship="neverendingModel.FK_EntryTag_Entry" FromRole="Entry" ToRole="EntryTag" />
+          <NavigationProperty Name="FeedBack" Relationship="neverendingModel.FK_FeedBack_Entry" FromRole="Entry" ToRole="FeedBack" />
+        </EntityType>
+        <Association Name="FK_Entry_Member">
+          <End Type="neverendingModel.Member" Role="Member" Multiplicity="1" />
+          <End Type="neverendingModel.Entry" Role="Entry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="Entry">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Entry_Story">
+          <End Type="neverendingModel.Story" Role="Story" Multiplicity="1" />
+          <End Type="neverendingModel.Entry" Role="Entry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Story">
+              <PropertyRef Name="StoryID" />
+            </Principal>
+            <Dependent Role="Entry">
+              <PropertyRef Name="StoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EntryTag_Entry">
+          <End Type="neverendingModel.Entry" Role="Entry" Multiplicity="1" />
+          <End Type="neverendingModel.EntryTag" Role="EntryTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entry">
+              <PropertyRef Name="EntryID" />
+            </Principal>
+            <Dependent Role="EntryTag">
+              <PropertyRef Name="EntryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FeedBack_Entry">
+          <End Type="neverendingModel.Entry" Role="Entry" Multiplicity="1" />
+          <End Type="neverendingModel.FeedBack" Role="FeedBack" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entry">
+              <PropertyRef Name="EntryID" />
+            </Principal>
+            <Dependent Role="FeedBack">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Follow">
+          <Key>
+            <PropertyRef Name="FollowID" />
+          </Key>
+          <Property Name="FollowID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FollowerID" Type="Int32" Nullable="false" />
+          <Property Name="FollowedID" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Member" Relationship="neverendingModel.FK_Follow_Member" FromRole="Follow" ToRole="Member" />
+        </EntityType>
+        <Association Name="FK_StoryMember_Story">
+          <End Type="neverendingModel.Story" Role="Story" Multiplicity="1" />
+          <End Type="neverendingModel.StoryMember" Role="StoryMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Story">
+              <PropertyRef Name="StoryID" />
+            </Principal>
+            <Dependent Role="StoryMember">
+              <PropertyRef Name="StoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Follow_Member">
+          <End Type="neverendingModel.Member" Role="Member" Multiplicity="1" />
+          <End Type="neverendingModel.Follow" Role="Follow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="Follow">
+              <PropertyRef Name="FollowerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StoryMember_Member">
+          <End Type="neverendingModel.Member" Role="Member" Multiplicity="1" />
+          <End Type="neverendingModel.StoryMember" Role="StoryMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="StoryMember">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Story_Member">
+          <End Type="neverendingModel.Member" Role="Member" Multiplicity="1" />
+          <End Type="neverendingModel.Story" Role="Story" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="Story">
+              <PropertyRef Name="AdminID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Story_StoryState">
+          <End Type="neverendingModel.StoryState" Role="StoryState" Multiplicity="1" />
+          <End Type="neverendingModel.Story" Role="Story" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StoryState">
+              <PropertyRef Name="StoryStateID" />
+            </Principal>
+            <Dependent Role="Story">
+              <PropertyRef Name="StateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="neverendingModelStoreContainer" CdmEntityContainer="Model1">
+          <EntitySetMapping Name="Comment">
+            <EntityTypeMapping TypeName="neverendingModel.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="CommentID" ColumnName="CommentID" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="UniqueID" ColumnName="UniqueID" />
+                <ScalarProperty Name="CommentText" ColumnName="CommentText" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="ParentCommentID" ColumnName="ParentCommentID" />
+                <ScalarProperty Name="ClientIP" ColumnName="ClientIP" />
+                <ScalarProperty Name="AdminID" ColumnName="AdminID" />
+                <ScalarProperty Name="LikeCount" ColumnName="LikeCount" />
+                <ScalarProperty Name="DislikeCount" ColumnName="DislikeCount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CommentType">
+            <EntityTypeMapping TypeName="neverendingModel.CommentType">
+              <MappingFragment StoreEntitySet="CommentType">
+                <ScalarProperty Name="CommentTypeID" ColumnName="CommentTypeID" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ELMAH_Error">
+            <EntityTypeMapping TypeName="neverendingModel.ELMAH_Error">
+              <MappingFragment StoreEntitySet="ELMAH_Error">
+                <ScalarProperty Name="ErrorId" ColumnName="ErrorId" />
+                <ScalarProperty Name="Application" ColumnName="Application" />
+                <ScalarProperty Name="Host" ColumnName="Host" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="User" ColumnName="User" />
+                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+                <ScalarProperty Name="TimeUtc" ColumnName="TimeUtc" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="AllXml" ColumnName="AllXml" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EntryTag">
+            <EntityTypeMapping TypeName="neverendingModel.EntryTag">
+              <MappingFragment StoreEntitySet="EntryTag">
+                <ScalarProperty Name="EntryTagID" ColumnName="EntryTagID" />
+                <ScalarProperty Name="EntryID" ColumnName="EntryID" />
+                <ScalarProperty Name="TagID" ColumnName="TagID" />
+                <ScalarProperty Name="TagTypeID" ColumnName="TagTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FeedBack">
+            <EntityTypeMapping TypeName="neverendingModel.FeedBack">
+              <MappingFragment StoreEntitySet="FeedBack">
+                <ScalarProperty Name="FeedBackID" ColumnName="FeedBackID" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="TextInfo" ColumnName="TextInfo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemLike">
+            <EntityTypeMapping TypeName="neverendingModel.ItemLike">
+              <MappingFragment StoreEntitySet="ItemLike">
+                <ScalarProperty Name="LikeID" ColumnName="LikeID" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDislike" ColumnName="IsDislike" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemLikeType">
+            <EntityTypeMapping TypeName="neverendingModel.ItemLikeType">
+              <MappingFragment StoreEntitySet="ItemLikeType">
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="Definition" ColumnName="Definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Job">
+            <EntityTypeMapping TypeName="neverendingModel.Job">
+              <MappingFragment StoreEntitySet="Job">
+                <ScalarProperty Name="JobID" ColumnName="JobID" />
+                <ScalarProperty Name="JobName" ColumnName="JobName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="LastRunTime" ColumnName="LastRunTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobWorkLog">
+            <EntityTypeMapping TypeName="neverendingModel.JobWorkLog">
+              <MappingFragment StoreEntitySet="JobWorkLog">
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+                <ScalarProperty Name="JobID" ColumnName="JobID" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Member">
+            <EntityTypeMapping TypeName="neverendingModel.Member">
+              <MappingFragment StoreEntitySet="Member">
+                <ScalarProperty Name="TwitterID" ColumnName="TwitterID" />
+                <ScalarProperty Name="FollowerCount" ColumnName="FollowerCount" />
+                <ScalarProperty Name="LinkedinJob" ColumnName="LinkedinJob" />
+                <ScalarProperty Name="TwitterTokens" ColumnName="TwitterTokens" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="FaceID" ColumnName="FaceID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MemberName" ColumnName="MemberName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="NickName" ColumnName="NickName" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
+                <ScalarProperty Name="FirstVisitDate" ColumnName="FirstVisitDate" />
+                <ScalarProperty Name="FirstVisitIP" ColumnName="FirstVisitIP" />
+                <ScalarProperty Name="LastVisitDate" ColumnName="LastVisitDate" />
+                <ScalarProperty Name="LastVisitIP" ColumnName="LastVisitIP" />
+                <ScalarProperty Name="AvatarCode" ColumnName="AvatarCode" />
+                <ScalarProperty Name="VoteMultiplier" ColumnName="VoteMultiplier" />
+                <ScalarProperty Name="AdminRoleID" ColumnName="AdminRoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parameter">
+            <EntityTypeMapping TypeName="neverendingModel.Parameter">
+              <MappingFragment StoreEntitySet="Parameter">
+                <ScalarProperty Name="ParameterID" ColumnName="ParameterID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Story">
+            <EntityTypeMapping TypeName="neverendingModel.Story">
+              <MappingFragment StoreEntitySet="Story">
+                <ScalarProperty Name="StoryID" ColumnName="StoryID" />
+                <ScalarProperty Name="AdminID" ColumnName="AdminID" />
+                <ScalarProperty Name="StoryName" ColumnName="StoryName" />
+                <ScalarProperty Name="StoryText" ColumnName="StoryText" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="PageCount" ColumnName="PageCount" />
+                <ScalarProperty Name="LastEntryChosenDate" ColumnName="LastEntryChosenDate" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="FirstCounter" ColumnName="FirstCounter" />
+                <ScalarProperty Name="SecondCounter" ColumnName="SecondCounter" />
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
+                <ScalarProperty Name="NextTickDate" ColumnName="NextTickDate" />
+                <ScalarProperty Name="IsPrivateView" ColumnName="IsPrivateView" />
+                <ScalarProperty Name="IsPrivateWriting" ColumnName="IsPrivateWriting" />
+                <ScalarProperty Name="CharLimit" ColumnName="CharLimit" />
+                <ScalarProperty Name="AllowMultipleSentences" ColumnName="AllowMultipleSentences" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StoryMember">
+            <EntityTypeMapping TypeName="neverendingModel.StoryMember">
+              <MappingFragment StoreEntitySet="StoryMember">
+                <ScalarProperty Name="StoryMemberID" ColumnName="StoryMemberID" />
+                <ScalarProperty Name="StoryID" ColumnName="StoryID" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StoryMemberType">
+            <EntityTypeMapping TypeName="neverendingModel.StoryMemberType">
+              <MappingFragment StoreEntitySet="StoryMemberType">
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StoryState">
+            <EntityTypeMapping TypeName="neverendingModel.StoryState">
+              <MappingFragment StoreEntitySet="StoryState">
+                <ScalarProperty Name="StoryStateID" ColumnName="StoryStateID" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tag">
+            <EntityTypeMapping TypeName="neverendingModel.Tag">
+              <MappingFragment StoreEntitySet="Tag">
+                <ScalarProperty Name="TagID" ColumnName="TagID" />
+                <ScalarProperty Name="TagText" ColumnName="TagText" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TagType">
+            <EntityTypeMapping TypeName="neverendingModel.TagType">
+              <MappingFragment StoreEntitySet="TagType">
+                <ScalarProperty Name="TagTypeID" ColumnName="TagTypeID" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="CalculateVotes" FunctionName="neverendingModel.Store.CalculateVotes" />
+          <FunctionImportMapping FunctionImportName="ELMAH_GetErrorsXml" FunctionName="neverendingModel.Store.ELMAH_GetErrorsXml" />
+          <FunctionImportMapping FunctionImportName="ELMAH_GetErrorXml" FunctionName="neverendingModel.Store.ELMAH_GetErrorXml" />
+          <FunctionImportMapping FunctionImportName="ELMAH_LogError" FunctionName="neverendingModel.Store.ELMAH_LogError" />
+          <FunctionImportMapping FunctionImportName="FixStoryPages" FunctionName="neverendingModel.Store.FixStoryPages" />
+          <EntitySetMapping Name="Entry">
+            <EntityTypeMapping TypeName="neverendingModel.Entry">
+              <MappingFragment StoreEntitySet="Entry">
+                <ScalarProperty Name="IsTagged" ColumnName="IsTagged" />
+                <ScalarProperty Name="VotesAvg" ColumnName="VotesAvg" />
+                <ScalarProperty Name="TotalVotes" ColumnName="TotalVotes" />
+                <ScalarProperty Name="IsParagraphStart" ColumnName="IsParagraphStart" />
+                <ScalarProperty Name="PageNo" ColumnName="PageNo" />
+                <ScalarProperty Name="AdminDate" ColumnName="AdminDate" />
+                <ScalarProperty Name="AdminID" ColumnName="AdminID" />
+                <ScalarProperty Name="DislikeCount" ColumnName="DislikeCount" />
+                <ScalarProperty Name="LikeCount" ColumnName="LikeCount" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IsChosen" ColumnName="IsChosen" />
+                <ScalarProperty Name="IsAnonymous" ColumnName="IsAnonymous" />
+                <ScalarProperty Name="EntryText" ColumnName="EntryText" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="StoryID" ColumnName="StoryID" />
+                <ScalarProperty Name="EntryID" ColumnName="EntryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Follow">
+            <EntityTypeMapping TypeName="neverendingModel.Follow">
+              <MappingFragment StoreEntitySet="Follow">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="FollowedID" ColumnName="FollowedID" />
+                <ScalarProperty Name="FollowerID" ColumnName="FollowerID" />
+                <ScalarProperty Name="FollowID" ColumnName="FollowID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

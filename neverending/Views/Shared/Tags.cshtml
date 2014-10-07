@@ -1,0 +1,67 @@
+﻿@using neverending;
+@using neverending.Helpers;
+@using neverending.Models;
+@using Resources;
+@{
+    Layout = null;
+    if (ViewBag.tags == null)
+    {
+        return;
+    }
+    Member currentmember = Sessioner.GetSessionMember();
+    List<taglist> alltags = ViewBag.tags as List<taglist>;
+    
+}
+@*<div class="mainR">*@
+<span class="mainRTitle">@res.tags</span>
+<a class="mainRTitleR" href="/">@res.viewentries</a>
+<div class="clr"></div>
+<ul>
+    <li class="tagTitle1">@res.Characters</li>
+    @foreach (taglist tag in alltags)
+    {
+        if (tag.tagtype == 1)
+        {
+
+        <li><a href="/site/tagged?storyid=@(HttpContext.Current.Request["storyid"])&tag=@tag.tag">@tag.tag</a>
+            @if (currentmember.AdminRoleID.HasValue)
+            {
+                @:&nbsp;&nbsp;<a href="javascript:void(0)" onclick="DeleteTagRight(@tag.entrytagid)">Sil</a>
+                }
+        </li>
+        }
+    }
+</ul>
+<ul>
+    <li class="tagTitle2">@res.Places</li>
+    @foreach (taglist tag in alltags)
+    {
+        if (tag.tagtype == 2)
+        {
+
+        <li><a href="/site/tagged?storyid=@(HttpContext.Current.Request["storyid"])&tag=@tag.tag">@tag.tag</a>
+            @if (currentmember.AdminRoleID.HasValue)
+            {
+                @:&nbsp;&nbsp;<a href="javascript:void(0)" onclick="DeleteTagRight(@tag.entrytagid)">Sil</a>
+                }</li>
+        }
+    }
+</ul>
+<ul class="lastUl">
+    <li class="tagTitle3">@res.time</li>
+    @foreach (taglist tag in alltags)
+    {
+        if (tag.tagtype == 3)
+        {
+
+        <li><a href="/site/tagged?storyid=@(HttpContext.Current.Request["storyid"])&tag=@tag.tag">@tag.tag</a>
+            @if (currentmember.AdminRoleID.HasValue)
+            {
+                @:&nbsp;&nbsp;<a href="javascript:void(0)" onclick="DeleteTagRight(@tag.entrytagid)">Sil</a>
+                }
+        </li>
+        }
+    }
+</ul>
+<div class="clr"></div>
+@*</div>*@

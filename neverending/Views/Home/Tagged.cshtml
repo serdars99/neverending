@@ -1,0 +1,39 @@
+﻿@using neverending;
+@using neverending.Helpers;
+@using Resources;
+@{
+    ViewBag.Title = "Tagged";
+    Story story = ViewBag.story as Story;
+    string linkbase1 = "http://" + Request.Url.Host;
+    bool istr = System.Globalization.CultureInfo.CurrentCulture.ToString() == "tr-TR";
+    string storylink = linkbase1 + "/" + (istr ? "hikaye/" : "story/") + BHelper.rwtext(story.StoryName) + "?id=" + HttpContext.Current.Request["storyid"];
+}
+<div class="main">
+    <div class="mainL">
+        <div class="content">
+            <div class="contentTop">@HttpContext.Current.Request["tag"] <a class="close2" href="@storylink"></a></div>
+            @foreach (Entry entry in ViewBag.tagged)
+            {
+                <div class="authorDiv">
+                    @*<span class="spanbg" eid="@(entry.EntryID)" pid="@entry.PageNo" sid="@entry.StoryID" onclick="showinfo(this);">@entry.EntryText</span>*@
+                    <span class="mainentry spanbg" eid="@(entry.EntryID)" pid="@entry.PageNo" mid="@(entry.IsAnonymous ? 0 : entry.MemberID)" mname="@(entry.IsAnonymous ? "" : entry.Member.MemberName)" 
+                        isanon="@entry.IsAnonymous.ToString().ToLower()" isprg="@((!entry.IsParagraphStart).ToString().ToLower())" sname="@BHelper.rwtext(entry.Story.StoryName)"
+                    onclick="showinfo(this);">@entry.EntryText</span>
+                    <div class="clr"></div>
+                    <span class="contentLike">@(MvcHtmlString.Create(res.likesanddislikes.Replace("#l", entry.LikeCount.ToString()).Replace("#dl", entry.DislikeCount.ToString()))) </span>
+                    <em>@res.Posted @entry.CreateDate.ToString("dd.MM.yyy")</em><div class="clr"></div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="mainR">
+        <span class="mainRTitle">@res.votesentences</span>
+        <a href="javascript:void(0);" onclick="loadtagsright();" class="mainRTitleR">@res.viewtags</a>
+        <div class="clr"></div>
+        <span class="mainRSpot">@res.votinglabel</span>
+        <div id="entryfades"></div>
+        @{Html.RenderPartial("ScrollEntries", new ViewDataDictionary { { "entriesonvote", ViewBag.entriesonvote } });}
+    </div>
+    <div class="clr"></div>
+    <input type="hidden" id="pname" value="tagged" />
+</div>

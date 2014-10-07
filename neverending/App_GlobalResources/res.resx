@@ -1,0 +1,343 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="about" xml:space="preserve">
+    <value>Hakkında</value>
+  </data>
+  <data name="aboutmessage" xml:space="preserve">
+    <value>Sonsuz Metin'e hoşgeldiniz.&lt;br/&gt;&lt;br/&gt;
+Sonsuz Metin,  kullanıcıların ortaklaşa bir şekilde, yani “cümleten” ortaya çıkardıkları bir metin. &lt;br/&gt;&lt;br/&gt;
+Her kullanıcı bir cümle yazıyor ve bu cümleler sağ tarafta sıralanıyor. &lt;br/&gt;&lt;br/&gt;
+Oylama boyunca en fazla beğeniyi alan cümle, metne ekleniyor. &lt;br/&gt;&lt;br/&gt;
+Eğer iki veya daha fazla cümle aynı sayıda beğeniyi aldıysa, içlerinden en az “beğenmedim”i alan cümle seçiliyor.
+Ve sonraki oylama başlıyor.&lt;br/&gt;&lt;br/&gt;
+Sonsuz Metin'de herhangi bir içerik kısıtlaması kasıtlı olarak yok. Metnin sorumluluğu sana, bana, herkese ait. İyi yaz, iyi olsun. İyi yazılanı beğen, kötü yazılanı beğenme. Böylece, zevkle okunacak, güzel bir hikayemiz olsun. &lt;br/&gt;&lt;br/&gt;
+Sonsuza kadar.</value>
+  </data>
+  <data name="abouttitle" xml:space="preserve">
+    <value>Sonsuz Metin Hakkında</value>
+  </data>
+  <data name="allrights" xml:space="preserve">
+    <value>Tüm Hakları Saklıdır</value>
+  </data>
+  <data name="anonym" xml:space="preserve">
+    <value>anonim</value>
+  </data>
+  <data name="cantpostnow" xml:space="preserve">
+    <value>Şu anda cümle yazamıyorsun. Ama sağ taraftan diğer cümleleri oylayabilirsin.</value>
+  </data>
+  <data name="character" xml:space="preserve">
+    <value>Karakter</value>
+  </data>
+  <data name="Characters" xml:space="preserve">
+    <value>Karakterler</value>
+  </data>
+  <data name="choosetagwords" xml:space="preserve">
+    <value>Etiketlemek istediğin kelimeyi ve ilgili etiketi seç.</value>
+  </data>
+  <data name="chosenthanks" xml:space="preserve">
+    <value>Sonsuz Metin senin cümlenle devam etti,&lt;br /&gt;</value>
+  </data>
+  <data name="congrats" xml:space="preserve">
+    <value>Tebrikler!</value>
+  </data>
+  <data name="countdown1" xml:space="preserve">
+    <value>sonra oylamaya geçilecek!</value>
+  </data>
+  <data name="dislike" xml:space="preserve">
+    <value>Kötü</value>
+  </data>
+  <data name="disliked" xml:space="preserve">
+    <value>Beğenilmedi</value>
+  </data>
+  <data name="dislikes" xml:space="preserve">
+    <value>kötü</value>
+  </data>
+  <data name="entriesby" xml:space="preserve">
+    <value>Cümleleri</value>
+  </data>
+  <data name="entry" xml:space="preserve">
+    <value>cümle</value>
+  </data>
+  <data name="entrylink" xml:space="preserve">
+    <value>Cümle Linki</value>
+  </data>
+  <data name="info" xml:space="preserve">
+    <value>Bilgi</value>
+  </data>
+  <data name="like" xml:space="preserve">
+    <value>İyi</value>
+  </data>
+  <data name="liked" xml:space="preserve">
+    <value>Beğenildi</value>
+  </data>
+  <data name="likes" xml:space="preserve">
+    <value>iyi</value>
+  </data>
+  <data name="likesanddislikes" xml:space="preserve">
+    <value>#l kere beğenildi &lt;br/&gt; #dl kere beğenilmedi</value>
+  </data>
+  <data name="loading" xml:space="preserve">
+    <value>yükleniyor</value>
+  </data>
+  <data name="loadprev" xml:space="preserve">
+    <value>Öncesini yükle</value>
+  </data>
+  <data name="location" xml:space="preserve">
+    <value>Mekan</value>
+  </data>
+  <data name="login" xml:space="preserve">
+    <value>Giriş</value>
+  </data>
+  <data name="logout" xml:space="preserve">
+    <value>Çıkış</value>
+  </data>
+  <data name="MainTitle" xml:space="preserve">
+    <value>Sonsuz Metin Beta</value>
+  </data>
+  <data name="memberlink" xml:space="preserve">
+    <value>Yazar Linki</value>
+  </data>
+  <data name="minutes" xml:space="preserve">
+    <value>dakika</value>
+  </data>
+  <data name="Places" xml:space="preserve">
+    <value>Mekanlar</value>
+  </data>
+  <data name="postanonymous" xml:space="preserve">
+    <value>Anonim gönderi yap</value>
+  </data>
+  <data name="Posted" xml:space="preserve">
+    <value>Tarih</value>
+  </data>
+  <data name="postedsuccesfully" xml:space="preserve">
+    <value>Cümleniz gönderildi</value>
+  </data>
+  <data name="readnextentries" xml:space="preserve">
+    <value>Bir sonraki cümle zamanı gelene kadar diğer cümleleri oylayabilirsin.</value>
+  </data>
+  <data name="savetags" xml:space="preserve">
+    <value>Tamamdır</value>
+  </data>
+  <data name="seconds" xml:space="preserve">
+    <value>saniye</value>
+  </data>
+  <data name="sentencewaschosen" xml:space="preserve">
+    <value>Bu cümle seçildi!</value>
+  </data>
+  <data name="stolen" xml:space="preserve">
+    <value>Alıntı olduğunu düşünüyorum&lt;br/&gt;(aşağıda nereden olduğunu belirtiniz )</value>
+  </data>
+  <data name="submit" xml:space="preserve">
+    <value>GÖNDER</value>
+  </data>
+  <data name="tags" xml:space="preserve">
+    <value>Etiketler</value>
+  </data>
+  <data name="time" xml:space="preserve">
+    <value>Zaman</value>
+  </data>
+  <data name="viewentries" xml:space="preserve">
+    <value>Cümleleri Göster</value>
+  </data>
+  <data name="viewtags" xml:space="preserve">
+    <value>Etiketleri Göster</value>
+  </data>
+  <data name="votedbefore" xml:space="preserve">
+    <value>Daha önce bu cümleye oy verdiniz</value>
+  </data>
+  <data name="votesentences" xml:space="preserve">
+    <value>Cümleleri Oyla</value>
+  </data>
+  <data name="votinglabel" xml:space="preserve">
+    <value>Aşağıda başkalarının yazdığı cümleler var. Oy ver, hikaye senin seçtiğin şekilde devam etsin.</value>
+  </data>
+  <data name="votingphase1" xml:space="preserve">
+    <value>OYLAMA AŞAMASI</value>
+  </data>
+  <data name="votingphase2" xml:space="preserve">
+    <value>Şu anda cümle yazamıyorsun. Ama sağ taraftan diğer cümleleri oylayabilirsin.</value>
+  </data>
+  <data name="waitingfornextstep" xml:space="preserve">
+    <value>sonraki adım bekleniyor...</value>
+  </data>
+  <data name="warning" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="welcome1" xml:space="preserve">
+    <value>Sonsuz Metin’e hoş geldiniz!</value>
+  </data>
+  <data name="welcome2" xml:space="preserve">
+    <value>CÜMLEYİ YAZIN</value>
+  </data>
+  <data name="welcome3" xml:space="preserve">
+    <value>Sonsuz Metin’de hikaye senin yazdığın cümleye göre devam edecek. </value>
+  </data>
+  <data name="welcome4" xml:space="preserve">
+    <value>Merhaba,</value>
+  </data>
+  <data name="welcome5" xml:space="preserve">
+    <value>SONSUZ METİN’E HOŞ GELDİN</value>
+  </data>
+  <data name="welcome6" xml:space="preserve">
+    <value>Facebook hesabınla giriş yap ve bu hiç bitmeyecek anlatıya katkıda bulun. </value>
+  </data>
+  <data name="welcome7" xml:space="preserve">
+    <value>Facebook ile Giriş</value>
+  </data>
+  <data name="youpostedbefore" xml:space="preserve">
+    <value>Daha önce bu kısım için zaten entry girmiştiniz</value>
+  </data>
+  <data name="yourentrychosen" xml:space="preserve">
+    <value>CÜMLEN SEÇİLDİ</value>
+  </data>
+  <data name="yourentrysubmitted" xml:space="preserve">
+    <value>CÜMLEN GÖNDERİLDİ.</value>
+  </data>
+  <data name="settings" xml:space="preserve">
+    <value>Ayarlar</value>
+  </data>
+  <data name="report" xml:space="preserve">
+    <value>İntihal bildir</value>
+  </data>
+  <data name="complaintsent" xml:space="preserve">
+    <value>Teşekkürler. İlgileniyoruz.</value>
+  </data>
+  <data name="showauthorlink" xml:space="preserve">
+    <value>Yazar sayfasını göster</value>
+  </data>
+  <data name="showentrylink" xml:space="preserve">
+    <value>Cümle linkini göster</value>
+  </data>
+  <data name="contact" xml:space="preserve">
+    <value>İletişim</value>
+  </data>
+  <data name="follow" xml:space="preserve">
+    <value>takip et</value>
+  </data>
+  <data name="unfollow" xml:space="preserve">
+    <value>takibi bırak</value>
+  </data>
+  <data name="twitterconnect" xml:space="preserve">
+    <value>Twitter ile Giriş</value>
+  </data>
+  <data name="countdown2" xml:space="preserve">
+    <value>sonra cümle yazabilirsiniz!</value>
+  </data>
+</root>

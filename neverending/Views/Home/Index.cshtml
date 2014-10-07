@@ -1,0 +1,131 @@
+﻿@using neverending;
+@using neverending.Helpers;
+@using neverending.Models;
+@using Resources;
+@{
+    ViewBag.Title = res.MainTitle;
+    Story story = ViewBag.story as Story;
+    if (story == null)
+    {
+        return;
+    }
+    Member currentmember = Sessioner.GetSessionMember();
+    int currentpage = story.PageCount;
+    if (!string.IsNullOrEmpty(Request["page"]))
+    {
+        currentpage = int.Parse(Request["page"]);
+    }
+    string linkbase1 = "http://" + Request.Url.Host;
+    bool istr = System.Globalization.CultureInfo.CurrentCulture.ToString() == "tr-TR";
+    string storylink = linkbase1 + "/" + (istr ? "hikaye/" : "story/") + BHelper.rwtext(story.StoryName) + "?id=" + story.StoryID.ToString();
+    Entry lastwinner = Common.GetLastWinningEntry(ViewBag.story.StoryID);
+}
+<div class="main">
+    <div class="mainL">
+        <div class="hiddens" style="display: none">
+            <input type="hidden" id="storylink" value="@storylink" />
+            <input type="hidden" id="pagecount" value="@story.PageCount" />
+            <input type="hidden" id="currentpage" value="@currentpage" />
+            <input type="hidden" id="minpage" value="@currentpage" />
+            <input type="hidden" id="maxpage" value="@currentpage" />
+            <input type="hidden" id="hdnstoryid" value="@story.StoryID" />
+            <input type="hidden" id="hdnstorystate" value="@story.StateID" />
+            <input type="hidden" id="hdncharlimit" value="@story.CharLimit" />
+            <input type="hidden" id="hdnnextexpiry" value="@(story.NextTickDate.ToUniversalTime().ToString("s"))Z" />
+            @if (currentmember != null && currentmember.MemberID == lastwinner.MemberID && !lastwinner.IsTagged)
+            {
+                <input type="hidden" id="hdnlastwinnerentryid" value="@lastwinner.EntryID"/>
+                <input type="hidden" id="hdnlastwinnerentrytext" value="@lastwinner.EntryText"/>
+                string linkbase = linkbase1 + "/" + (istr ? "hikaye/" : "story/") + BHelper.rwtext(lastwinner.Story.StoryName) + "?id=" +
+                    lastwinner.Story.StoryID.ToString() + "&page=" + lastwinner.PageNo.ToString() + "&eid=" + lastwinner.EntryID.ToString();
+                <input type="hidden" id="hdnlastwinnerelink" value="@linkbase"/>
+            }
+            else
+            {
+                <input type="hidden" id="hdnlastwinnerentryid" value="" />
+                <input type="hidden" id="hdnlastwinnerentrytext" value="" />
+            }
+        </div>
+        <div class="content">
+            <div class="navTop">
+                @if (currentpage > 1)
+                {
+                    <a class="prev" href="javascript:void(0);" onclick="ajaxnavigate(true);">&lt; Önceki Sayfa</a>
+                }
+                @if (currentpage != 1)
+                {
+                    <a class="gofirst" href="@(storylink)&page=1">« Başa Git</a>
+                }
+            </div>
+            <div class="clr"></div>
+
+            <div id="storydesc" style="display: none">
+                <span class="spanbg">@story.StoryText</span>@(MvcHtmlString.Create(1 == 1 ? "<br/>" : ""))
+            </div>
+            <div id="contentbase">
+                @if (ViewBag.entries != null)
+                {
+                    foreach (Entry entry in ViewBag.entries)
+                    {
+                    @(MvcHtmlString.Create(entry.IsParagraphStart ? "<br/>" : ""))
+                    <span class="mainentry spanbg" eid="@(entry.EntryID)" pid="@entry.PageNo" mid="@(entry.IsAnonymous ? 0 : entry.MemberID)" mname="@(entry.IsAnonymous ? "" : entry.Member.MemberName)" 
+                        isanon="@entry.IsAnonymous.ToString().ToLower()" isprg="@((!entry.IsParagraphStart).ToString().ToLower())" sname="@BHelper.rwtext(entry.Story.StoryName)"
+                    onclick="showinfo(this);">@entry.EntryText</span>
+                    }
+                }
+            </div>
+            <div class="navBot">
+                @if (currentpage < story.PageCount)
+                {
+                    <a class="next" href="javascript:void(0);" onclick="ajaxnavigate(false);">Sonraki Sayfa &gt;</a>
+                }
+                @if (currentpage != story.PageCount)
+                {
+                    <a class="golast" href="@(storylink)&page=@story.PageCount">Sona Git »</a>
+                }
+            </div>
+            <div class="clr"></div>
+        </div>
+        <div class="contentBottom pregular" style="display: none">
+            <div class="notposted">
+                <textarea class="textarea" onclick="checklogin();" onkeyup="limitchars(this,@story.CharLimit,'.counter',@(story.AllowMultipleSentences ? "true" : "false"));"></textarea>
+                <span class="counter">@ViewBag.story.CharLimit</span>
+                <div class="clr"></div>
+                <a class="submit" href="javascript:void(0);" onclick="SubmitEntry();">@res.submit</a>
+                <div class="clr"></div>
+                <span class="infoBottom">
+                    <input type="checkbox" id="chkanon" />&nbsp;@res.postanonymous</span>
+            </div>
+            <div class="alreadyposted" style="display: none">
+                <span class="info5"></span>
+                <span class="info6">@res.yourentrysubmitted</span>
+                <span class="info7">@res.readnextentries</span>
+            </div>
+            <span class="info4"><span id="countdown1"></span>&nbsp;@res.countdown1</span>
+        </div>
+        <div class="contentBottom pvoting" style="display: none">
+            <span class="info8">@res.votingphase1</span>
+            <span class="info9">@res.votingphase2</span>
+            <span class="info4"><span id="countdown2"></span>&nbsp;@res.countdown2</span>
+        </div>
+        <div class="contentBottom pfirsttime" style="display: none">
+            <input type="text" class="input" onclick="firsttimeclick();" />
+            <div class="info">
+                <span class="info1">@res.welcome1</span>
+                <span class="info2">@res.welcome2</span>
+                <span class="info3">@res.welcome3</span>
+            </div>
+            @*<span class="info4"><span id="countdown"></span> @res.countdown1</span>*@
+        </div>
+    </div>
+    <div class="mainR">
+        <span class="mainRTitle">@res.votesentences</span>
+        <a href="javascript:void(0);" onclick="loadtagsright();" class="mainRTitleR">@res.viewtags</a>
+        <div class="clr"></div>
+        <span class="mainRSpot">@res.votinglabel</span>
+        <div id="entryfades"></div>
+        @{Html.RenderPartial("ScrollEntries", new ViewDataDictionary { { "entriesonvote", ViewBag.entriesonvote } });}
+    </div>
+    <div class="clr"></div>
+    <input type="hidden" id="pname" value="main" />
+</div>

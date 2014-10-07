@@ -1,0 +1,78 @@
+﻿@using neverending;
+@using neverending.Helpers;
+@using Resources;
+@{
+    ViewBag.Title = "Settings";
+    Member member = Sessioner.GetSessionMember();
+}
+<div class="main">
+    <div class="mainL">
+        <div class="content">
+            <script type="text/javascript" src="http://platform.linkedin.com/in.js">
+  api_key: 77fh7weewlngjr
+  onLoad: onLinkedInLoad
+  authorize: false
+  lang:  tr_TR
+            </script>
+            <script type="text/javascript">
+                function onLinkedInLoadv2() {
+                    IN.User.authorize(function () {
+                        onLinkedInAuth();
+                    });
+                }
+                function onLinkedInLoad() {
+                    //IN.UI.Authorize().place();
+                    //IN.Event.on(IN, "auth", onLinkedInAuth);
+                    //IN.User.authorize(function () {
+                    //    onLinkedInAuth();
+                    //});
+                    //IN.Event.on(IN, "auth", function () { onLogin(); });
+                    //IN.Event.on(IN, "logout", function () { onLogout(); });
+                }
+                function onLinkedInAuth() {
+                    IN.API.Profile("me").fields("id", "firstName", "lastName", "industry")
+                        .result(displayProfiles);
+                }
+                function displayProfiles(profiles) {
+                    member = profiles.values[0];
+                    linkedincallback(member.id, member.firstName + " " + member.lastName, member.industry);
+                    console.log(member.id + " Hello " + member.firstName + " " + member.lastName + " - " + member.industry);
+                }
+            </script>
+
+            <table>
+                <tr>
+                    <td style="width: 300px">Linkedin : </td>
+                    @if (member.LinkedinJob == null)
+                    {
+                        <td>Bağlı Değil( <a href="javascript:void(0);" onclick="onLinkedInLoadv2();">Bağla</a> )</td>
+                    }
+                    else
+                    {
+                        string ljob = member.LinkedinJob.Split('~')[2];
+                        <td>Bağlı( <a href="javascript:void(0);" onclick="">@ljob</a> )</td>
+                    }
+                </tr>
+                <tr>
+                    <td>Twitter : </td>
+                    @if (member.TwitterTokens == null)
+                    {
+                        <td>Bağlı Değil( <a href="javascript:void(0);" onclick="twitterconnect();">Bağla</a> )</td>
+                    }
+                    else
+                    {
+                        string sname = member.TwitterTokens.Split('~')[3];
+                        <td>Bağlı( <a href="javascript:void(0);" onclick="">@sname</a> )</td>
+                    }
+                </tr>
+            </table>
+
+            <br />
+            @*<input type="button" onclick="onLinkedInLoad()" value="LinkedIn Connect" />*@
+            @*<script type="IN/Login"></script>*@
+        </div>
+    </div>
+    <div class="clr"></div>
+    <input type="hidden" id="pname" value="settings" />
+</div>
+

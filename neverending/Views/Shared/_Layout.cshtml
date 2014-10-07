@@ -1,0 +1,163 @@
+﻿@using neverending;
+@using neverending.Models;
+@using neverending.Helpers;
+@using Resources;
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="robots" content="index,follow" />
+    <meta name="viewport" content="@(HttpContext.Current.Request.Browser.IsMobileDevice ? "width=980, user-scalable=yes" : "initial-scale=1.0")" />
+    @if (Request.Url.Host.IndexOf("sonsuzmetin.com") != -1)
+    {
+        <meta name="description" content="hiç bitmeyecek öykü. internet üzerinde hep beraber yazılan ortaklaşa bir metin, sonsuz hikaye, ortaklaşa yaratma, bitmeyen hikaye, kolektif yazarlık." />
+        <meta name="keywords" content="yazarlık, öykü, bitmeyen öykü, anlatı yarat, öykü yaz, yazar ol, sonsuz eğlence, yaratıcı yazarlık, okur yazar sitesi, sosyal yazarlık, cümleten, hikaye" />
+        <link rel="shortcut icon" href="/sonsuzmetin_favicon.ico" type="image/x-icon" />
+    }
+    else
+    {
+        <meta name="description" content="neverending story. a collective text written collaboratively on the internet, infinite text, collaborative creation, exquisite corpse, collective writing." />
+        <meta name="keywords" content="writing, story, neverending story, write a story, create a narrative, be a writer, endless fun, creative writing, a website for readers and writers, social writing, story" />
+        <link rel="shortcut icon" href="/neverending_favicon.ico" type="image/x-icon" />
+    }
+    @Styles.Render("~/Content/css1")
+    @Styles.Render("~/Content/css2")
+    @*@Scripts.Render("~/bundles/modernizr")*@
+    <title>@ViewBag.Title</title>
+    @{
+        Member currentmember = Sessioner.GetSessionMember();
+    }
+</head>
+<body>
+    <div class="header">
+        <div class="headerIn">
+            <a href="/" class="logo" style="width: auto">
+                @if (Request.Url.Host.IndexOf("sonsuzmetin.com") != -1)
+                {
+                    <img src="/Content/images/sonsuzmetinlogo2.png" alt="sonsuzmetin.com" />
+                }
+                else
+                {
+                    <img src="/Content/images/neverendingtext_logo.png" alt="neverendingtext.com" />
+                }
+            </a>
+            <a style="margin-left: 10px" class="logo" href="/">
+                <img src="/Content/images/beta_icon.png"></a>
+            <div class="headerR">
+                @if (currentmember != null)
+                {
+                    @: <a href="/member?id=@currentmember.MemberID">@currentmember.MemberName</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:void(0);" onclick="Logout();">@res.logout</a>
+                    @:|&nbsp;&nbsp;<a href="/site/settings" >@res.settings</a>
+                    if (currentmember.AdminRoleID == 1)
+                    {
+                    @:&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/admin/stories">Admin</a>
+                    }
+                }
+                else
+                {
+                    <a href="javascript:void(0);" onclick="openlogger();">@res.login</a>
+                }
+                &nbsp;&nbsp;|&nbsp;&nbsp;<a href="/site/about">@res.about</a>
+                @if (Request.Url.Host.IndexOf("sonsuzmetin.com") != -1)
+                {
+                    @:&nbsp;&nbsp;|&nbsp;&nbsp;<a href="mailto:info@sonsuzmetin.com">@res.contact</a>
+                }
+@*                @if (currentmember != null && (currentmember.AdminRoleID==1))
+                {
+                    @:&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:void(0);" onclick="storystarter();">newstory</a>
+                    @:&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:void(0);" onclick="storystarter(12);">editstory</a>
+                }*@
+
+            </div>
+        </div>
+    </div>
+    @RenderBody()
+    <div class="footer">
+        <div class="hiddens">
+            <input type="hidden" id="resfile" value="@(Cacher.GetCachedData<string>(() => Common.GetResFileName(), "res", 20))" />
+            <input type="hidden" id="hdnculture" value="@System.Globalization.CultureInfo.CurrentCulture" />
+            <input type="hidden" id="hdnmemberid" value="@(currentmember == null ? "0" : currentmember.MemberID.ToString())" />
+            <input type="hidden" id="hdnmemberrole" value="@((currentmember == null || !currentmember.AdminRoleID.HasValue) ? "0" : currentmember.AdminRoleID.Value.ToString())" />
+        </div>
+        <div class="copy">&copy; @res.allrights</div>
+    </div>
+    @Scripts.Render("~/bundles/allscripts")
+    <div id="fb-root">
+    </div>
+    <script type="text/javascript">
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '@(Common.getfacekey())', // App ID
+                status: true, // check login status
+                cookie: true, // enable cookies to allow the server to access the session
+                xfbml: true  // parse XFBML
+            });
+            FB.Event.subscribe('auth.authResponseChange', function (response) {
+                if (response.status === 'connected') {
+                    LoginMember();
+                } else if (response.status === 'not_authorized') {
+                    //ConnectFB();
+                } else {
+                    //ConnectFB()
+                }
+            });
+        };
+        // Load the SDK asynchronously
+        (function (d) {
+            var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement('script'); js.id = id; js.async = true;
+            //js.src = "//connect.facebook.net/en_EN/all.js";
+            js.src = "//connect.facebook.net/" + document.getElementById('hdnculture').value.replace(/-/,'_') + "/all.js";
+            ref.parentNode.insertBefore(js, ref);
+        }(document));
+    </script>
+    <div class="hiddens" style="display: none">
+        <div id="genpopup">
+            <div class="popup3">
+                <a href="javascript:void(0);" class="close" onclick="$(this).parent().parent().dialog('close');"></a>
+                <div>
+                </div>
+            </div>
+        </div>
+        <div id="firstpopup">
+            <div class="popup1" style="height:380px">
+                <a href="javascript:void(0);" class="close" onclick="$(this).parent().parent().dialog('close');"></a>
+                <span class="popTxt1">@res.welcome4</span>
+                <span class="popTxt2">@res.welcome5</span>
+                <a href="javascript:void(0);" class="fblogin" onclick="ConnectFB();">@res.welcome7</a>
+                <a href="javascript:void(0);" class="fblogin" style="background: url('/content/images/tw1.png') no-repeat scroll 8px 8px rgba(0, 0, 0, 0);" onclick="twitterconnect();">@res.twitterconnect</a>
+                <span class="popTxt3">@MvcHtmlString.Create(res.welcome6)</span>
+            </div>
+        </div>
+        <div id="secondpopup" style="display: none">
+            <div class="popup2">
+                <a href="javascript:void(0);" class="close" onclick="$(this).parent().parent().dialog('close');"></a>
+
+                <span class="popTxt1">@res.congrats</span>
+                <span class="popTxt2">@res.yourentrychosen</span>
+                <span class="popTxt3">@MvcHtmlString.Create(res.chosenthanks)</span>
+                <span class="popTxt4">[...]<br />
+                    @*<span id="tagentry">this is your entry this is your entry this is your entry</span>    *@
+                    <textarea id="tagentry" style="width: 550px; background-color: yellow" onkeydown="return false;"></textarea>
+                </span>
+                <div class="popBottom">
+                    <span class="popTxt5">@res.choosetagwords</span>
+                    <span class="popTxt6">
+                        <input type="checkbox" name="tagger" onclick="AddTag(this);" value="3" />
+                        @res.time&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="tagger" onclick="AddTag(this);" value="2" />
+                        @res.location&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="tagger" onclick="AddTag(this);" value="1" />
+                        @res.character</span>
+                </div>
+                <a href="javascript:void(0);" class="submit2" onclick="PostTagsv2(this);">@res.savetags</a>
+                <div id="tagged"></div>
+                <br />
+                <div class="clr"></div>
+                <a href="#" class="fb" title="Share on Facebook" target="_blank">f</a>
+                <a href="#" class="tw" title="Share on Twitter" target="_blank">t</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

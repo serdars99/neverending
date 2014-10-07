@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b5488d5ba2a54ca894994b56316df611" Name="Diagram1">
+        <EntityTypeShape EntityType="neverendingModel.Comment" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="neverendingModel.CommentType" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="neverendingModel.ELMAH_Error" Width="1.5" PointX="8.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="neverendingModel.EntryTag" Width="1.5" PointX="8.25" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="neverendingModel.FeedBack" Width="1.5" PointX="11.25" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="neverendingModel.ItemLike" Width="1.5" PointX="8.75" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="neverendingModel.ItemLikeType" Width="1.5" PointX="0.75" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="neverendingModel.Job" Width="1.5" PointX="2.75" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="neverendingModel.JobWorkLog" Width="1.5" PointX="4.75" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="neverendingModel.Member" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="neverendingModel.Parameter" Width="1.5" PointX="10.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="neverendingModel.Story" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="neverendingModel.StoryMember" Width="1.5" PointX="12.625" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="neverendingModel.StoryMemberType" Width="1.5" PointX="10.75" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="neverendingModel.StoryState" Width="1.5" PointX="12.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="neverendingModel.Tag" Width="1.5" PointX="6" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="neverendingModel.TagType" Width="1.5" PointX="0.75" PointY="14.375" IsExpanded="true" />
+        <AssociationConnector Association="neverendingModel.FK_Comment_Member" ManuallyRouted="false" />
+        <AssociationConnector Association="neverendingModel.FK_EntryTag_Tag" ManuallyRouted="false" />
+        <AssociationConnector Association="neverendingModel.FK_FeedBack_Member" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="neverendingModel.Entry" Width="1.5" PointX="6" PointY="5.125" />
+        <AssociationConnector Association="neverendingModel.FK_Entry_Member" />
+        <AssociationConnector Association="neverendingModel.FK_Entry_Story" />
+        <AssociationConnector Association="neverendingModel.FK_EntryTag_Entry" />
+        <AssociationConnector Association="neverendingModel.FK_FeedBack_Entry" />
+        <EntityTypeShape EntityType="neverendingModel.Follow" Width="1.5" PointX="13.375" PointY="4.75" />
+        <AssociationConnector Association="neverendingModel.FK_StoryMember_Story" />
+        <AssociationConnector Association="neverendingModel.FK_Follow_Member" />
+        <AssociationConnector Association="neverendingModel.FK_StoryMember_Member" />
+        <AssociationConnector Association="neverendingModel.FK_Story_Member" />
+        <AssociationConnector Association="neverendingModel.FK_Story_StoryState" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
